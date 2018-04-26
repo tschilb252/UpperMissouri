@@ -21,21 +21,21 @@ read_rwcsv = function(file, dat_name_list){
 	return(dat)
 }
 
-Rdf2dt = function(rdf_ls, name_list = NA) {
+Rdf2dt = function(rdf_ls, name_list = NULL) {
 	require(data.table)
 	require(RWDataPlyr)
-	if(is.na(name_list) == T){
-		name_list = getSlotsInRdf(rdf_ls)
+	if(is.null(name_list) == T){
+		name_list = rdf_slot_names(rdf_ls)
 	}
 	nslots = length(name_list)
 	rdf_dt = data.table()
-	date_raw = getTimeSpan(rdf_ls)
+	date_raw = rdf_get_timespan(rdf_ls)
 	date_start = as.Date(date_raw[1])
 	date_end = as.Date(date_raw[2])
 	date_vec = seq(from = date_start, to = date_end, by = 'day')
 	for(i in 1:nslots){
 		name_sel = name_list[i]
-		rdf_temp = data.table(rdfSlotToMatrix(rdf_ls, name_sel)) %>% mutate(Date = date_vec) %>% gather(Trace, Value, -Date) %>% mutate(Trace = as.numeric(substring(Trace, 2)), RiverWareSlot = name_sel) %>% dplyr::select(Trace, RiverWareSlot, Date, Value)
+		rdf_temp = data.table(rdf_get_slot(rdf_ls, name_sel)) %>% mutate(Date = date_vec) %>% gather(Trace, Value, -Date) %>% mutate(Trace = as.numeric(substring(Trace, 2)), RiverWareSlot = name_sel) %>% dplyr::select(Trace, RiverWareSlot, Date, Value)
 		rdf_dt = bind_rows(rdf_dt, rdf_temp)
 	}
 	return(rdf_dt)

@@ -1,0 +1,9 @@
+Directory,Strategy,ScenarioSet
+"CC All,GeneralMRM,Baseline",Baseline,CC
+"CC All,GeneralMRM,BigHole40cfsSummerMin",SummerMax40cfs,CC
+"CC All,GeneralMRM,BigHole20cfsSummerMin",SummerMax20cfs,CC
+"CC All,GeneralMRM,BigHoleNoSummerMin",NoSummerMax,CC
+"PaleoEvent,GeneralMRM,Baseline",Baseline,PaleoEvent
+"PaleoEvent,GeneralMRM,BigHole40cfsSummerMin",SummerMax40cfs,PaleoEvent
+"PaleoEvent,GeneralMRM,BigHole20cfsSummerMin",SummerMax20cfs,PaleoEvent
+"PaleoEvent,GeneralMRM,BigHoleNoSummerMin",NoSummerMax,PaleoEvent
