@@ -4,6 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 # Basin Study, Big Hole River Basin
+#' Last Modified April 27 2018
 #################################################
 library(tidyverse)
 library(data.table)
