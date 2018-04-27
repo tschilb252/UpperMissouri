@@ -129,7 +129,7 @@ datMeas2AvgFutFl = datMeas2AvgFutFl %>%
 datMeas2AvgFutFl$Scenario = factor(datMeas2AvgFutFl$Scenario, levels = rev(c('HD', 'HW', 'CT', 'WD', 'WW', 'MID', 'LDP', 'MIP', 'LPP')))
 datMeas2AvgFutFl$Strategy = factor(datMeas2AvgFutFl$Strategy, levels = c('Baseline', 'SummerMax40cfs', 'SummerMax20cfs', 'NoSummerMax'))
 
-m1 = ggplot(data = datMeasAvgFutFl, aes(x = Measure, y = Scenario, fill = ValueChange, label = round(ValueChange))) + 
+m1 = ggplot(data = datMeasAvgFutFl, aes(x = Measure, y = Scenario, fill = ValueChange, label = round(ValueChange))) +
   geom_tile() +
   geom_text(size = 3) +
   facet_wrap(~Strategy, ncol = 1) +
@@ -139,7 +139,7 @@ m1 = ggplot(data = datMeasAvgFutFl, aes(x = Measure, y = Scenario, fill = ValueC
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
   theme(axis.line=element_blank(),
-    axis.text.x=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10),
     axis.text.y=element_blank(),
     axis.ticks=element_blank(),
     axis.title.x=element_blank(),
@@ -160,7 +160,7 @@ m2 = ggplot(data = datMeas2AvgFutFl, aes(x = Measure, y = Scenario, fill = Value
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
   theme(axis.line=element_blank(),
-    axis.text.x=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10),
     axis.text.y=element_blank(),
     axis.ticks=element_blank(),
     axis.title.x=element_blank(),
@@ -170,9 +170,10 @@ m2 = ggplot(data = datMeas2AvgFutFl, aes(x = Measure, y = Scenario, fill = Value
     strip.background = element_blank(),
     strip.text.x = element_blank()) +
     coord_equal()
-
 ggsave(paste0(dirOup, 'BigHoleISFGrid2.png'), height = 14, width = 3)
-  grid.arrange(m1, 2, nrow = 1)
+
+p = grid.arrange(arrangeGrob(m1, m2), ncol = 1)
+plot_grid(m1, m2, align = "h", ncol = 2, rel_width = c(1/8, 7/8))
 
 
-p = grid.arrange(arrangeGrob(m1, m2, widths = c(1, 4), ncol = 2), ncol = 1)
+ggsave(paste0(dirOup, 'BigHoleISFGrid3.png'), height = 14, width = 3)
