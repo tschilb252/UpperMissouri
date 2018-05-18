@@ -76,7 +76,6 @@ filter(Period %in% c('2050s', 'Historical') | is.na(Period))
 datMeasAvgFutFl$Measure = 'Shortage'
 
 datMeasAvgFutFl$Scenario = factor(datMeasAvgFutFl$Scenario, levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'MID', 'LDP', 'MIP', 'LPP')))
-datMeasAvgFutFl$Strategy = factor(datMeasAvgFutFl$Strategy, levels = c('Baseline', 'SummerMax40cfs', 'SummerMax20cfs', 'NoSummerMax'))
 datMeasAvgFutFl = datMeasAvgFutFl %>% mutate(ValueColScle = ValueChange * -1)
 
 fileTmp = fileList[2]
@@ -128,7 +127,6 @@ datMeas2AvgFutFl = datMeas2AvgFutFl %>%
   left_join(measLabTbl)
 
 datMeas2AvgFutFl$Scenario = factor(datMeas2AvgFutFl$Scenario, levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'MID', 'LDP', 'MIP', 'LPP')))
-datMeas2AvgFutFl$Strategy = factor(datMeas2AvgFutFl$Strategy, levels = c('Baseline', 'SummerMax40cfs', 'SummerMax20cfs', 'NoSummerMax'))
 datMeas2AvgFutFl = datMeas2AvgFutFl %>% mutate(ValueColScle = ValueChange)
 
 datMeasPlot = bind_rows(datMeasAvgFutFl, datMeas2AvgFutFl)
@@ -141,7 +139,7 @@ ggplot(data = datMeasPlot, aes(x = Measure, y = Scenario,
   fill = ValueColScle, label = round(ValueChange))) +
   geom_tile(colour = 'black') +
   # geom_text(size = 3) +
-  facet_wrap(~Strategy, ncol = 1, strip.position="left") +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left") +
   scale_fill_gradientn(colors = brewer.pal(9, 'RdBu'), limits = c(-100, 100)) +
   xlab('') +
   ylab('') +
@@ -159,56 +157,4 @@ ggplot(data = datMeasPlot, aes(x = Measure, y = Scenario,
     coord_equal()
 
 ggsave(paste0(dirOup, 'BigHoleISFGrid.png'), height = 10, width = 8)
-
-
-m1 = ggplot(data = datMeasAvgFutFl, aes(x = Measure, y = Scenario, fill = ValueChange, label = round(ValueChange))) +
-  geom_tile(colour = 'black') +
-  geom_text(size = 3) +
-  facet_wrap(~Strategy, ncol = 1) +
-  scale_fill_gradientn(colors = rev(brewer.pal(9, 'RdBu')), limits = c(-100, 100)) +
-  xlab('') +
-  ylab('') +
-  scale_x_discrete(expand=c(0,0), position="top") +
-  scale_y_discrete(expand=c(0,0)) +
-  theme(axis.line=element_blank(),
-    axis.text.x=element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10),
-    axis.text.y=element_blank(),
-    axis.ticks=element_blank(),
-    axis.title.x=element_blank(),
-    axis.title.y=element_blank(),legend.position="none",
-    panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
-    panel.grid.minor=element_blank(),plot.background=element_blank(),
-    strip.background = element_blank(),
-    strip.text.x = element_blank(),
-    plot.margin=unit(c(1,1,1,-0.5), "cm")) +
-    coord_equal() + labs(x=NULL)
-
-m2 = ggplot(data = datMeas2AvgFutFl, aes(x = Measure, y = Scenario,
-  fill = ValueChange, label = round(ValueChange))) +
-  geom_tile(colour = 'black') +
-  geom_text(size = 3) +
-  facet_wrap(~Strategy, ncol = 1, strip.position="left") +
-  scale_fill_gradientn(colors = brewer.pal(9, 'RdBu'), limits = c(-100, 100)) +
-  xlab('') +
-  ylab('') +
-  scale_x_discrete(expand=c(0,0), position="top") +
-  scale_y_discrete(expand=c(0,0)) +
-  theme(axis.line=element_blank(),
-    axis.text.x=element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10),
-    axis.text.y=element_blank(),
-    axis.ticks=element_blank(),
-    axis.title.x=element_blank(),
-    axis.title.y=element_blank(),legend.position="none",
-    panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
-    panel.grid.minor=element_blank(),plot.background=element_blank(),
-    strip.background = element_blank(),
-    plot.margin=unit(c(1,0.5,1,1), "cm")) +
-    coord_equal()
-
-
-p = grid.arrange(m2, m1, ncol = 2, nrow = 1)
-ggsave(plot = p, paste0(dirOup, 'BigHoleISFGrid3.png'), height = 14, width = 8)
-
-ggsave(paste0(dirOup, 'BigHoleISFGrid2.png'), height = 14, width = 3)
-
-plot_grid(m1, m2, align = "h", ncol = 2, rel_width = c(1/8, 7/8))
+write.csv(datMeasPlot, paste0(dirOup, 'BigHoleISFGrid.csv'), row.names = F, quote = F)

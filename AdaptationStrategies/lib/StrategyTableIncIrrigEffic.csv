@@ -1,0 +1,5 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"CC All,GeneralMRM,Baseline",Baseline,Baseline,CC
+"CC All,GeneralMRM,IncIrrigEffic",IncIrrigEffic,Increase Irrigation Efficiency,CC
+"PaleoEvent,GeneralMRM,Baseline",Baseline,Baseline,PaleoEvent
+"PaleoEvent,GeneralMRM,IncIrrigEffic",IncIrrigEffic,Increase Irrigation Efficiency,PaleoEvent
