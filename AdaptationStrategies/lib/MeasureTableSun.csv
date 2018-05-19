@@ -1,0 +1,25 @@
+﻿Measure,File,Slot
+GID Shortages,DepletionShortage.rdf,GID East Users.Depletion Shortage
+GID Shortages,DepletionShortage.rdf,GID Middle Users.Depletion Shortage
+GID Shortages,DepletionShortage.rdf,Freezeout Area Irrigators.Depletion Shortage
+FSID and Broken O Shortages,DepletionShortage.rdf,Fort Shaw ID Irrigation.Depletion Shortage
+FSID and Broken O Shortages,DepletionShortage.rdf,Other Broken O irrigation.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Benton Lake Diversions.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Floweree Canal Irrigation.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Irrigation above Turnbull Drop.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Irrigation above Willow Creek.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Lower Sun Irrigators.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Muddly Creek Irrigation.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Nilan Irrigation.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Nilan North Irrigation.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Rocky Reef Irrigators.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Senior Private Irrigation.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Sun River Valley Ditch Irrigators.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Upper Elk Creek Irrigation.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Upstream Irrigation.Depletion Shortage
+Other Irrigators Shortages,DepletionShortage.rdf,Willow Creek Irrigation.Depletion Shortage
+Gibson EOWY Storage,ResStorage.rdf,Gibson Res.Storage
+Pishkun EOWY Storage,ResStorage.rdf,Pishkun Res.Storage
+Willow Creek EOWY Storage,ResStorage.rdf,Willow Creek Res.Storage
+Upper Sun 7-Day Minimum Flow,GageFlow.rdf,06080900 Sun bl Diversion Dam nr Augusta.Gage Inflow
+Lower Sun 7-Day Minimum Flow,GageFlow.rdf,06089000 Sun nr Vaughn1.Gage Inflow

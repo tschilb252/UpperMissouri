@@ -1,10 +1,10 @@
 #################################################
-#' @title Upper Missouri Basin Study - Increase
-#' Irrigation Efficiency Figures
+#' @title Upper Missouri Basin Study - Flushing Flows
+#' Figures
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
-#' Basin Study, Increased Irrigation Efficiency Strategy
-#' Last Modified May 18 2018
+#' Basin Study, Flushing FLows (Ecological Flows) Strategy
+#' Last Modified May 19 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -21,8 +21,8 @@ dirOup = 'T:/PlanningOperations/Staff/DBROMAN/UMBIA/AdaptationStrategies/Figures
 
 # LookUp Table Locations
 ScenTbl = fread('lib/ScenarioTable.csv')
-StgyTbl = fread('lib/StrategyTableIncIrrigEffic.csv')
-MeasTbl = fread('lib/MeasureTableIncIrrigEffic.csv')
+StgyTbl = fread('lib/StrategyTableFlushingFlows.csv')
+MeasTbl = fread('lib/MeasureTableFlushingFlows.csv')
 
 ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
 #################################################
@@ -111,5 +111,5 @@ ggplot(data = datMeasPlot, aes(x = Measure, y = Scenario,
     strip.background = element_blank()) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'IncIrrigEfficISFGrid.png'), height = 10, width = 8)
-write.csv(datMeasPlot, paste0(dirOup, 'IncIrrigEfficISFGrid.csv'), row.names = F, quote = F)
+ggsave(paste0(dirOup, 'FlushingFlowsISFGrid.png'), height = 10, width = 8)
+write.csv(datMeasPlot, paste0(dirOup, 'FlushingFlowsISFGrid.csv'), row.names = F, quote = F)

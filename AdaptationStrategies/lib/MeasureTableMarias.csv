@@ -1,0 +1,6 @@
+﻿Measure,File,Slot
+Tiber Irrigators Deliveries,Diversion.rdf,Tiber Irrigators.Diversion
+Tiber EOWY Storage,ResStorage.rdf,Tiber.Storage
+Tiber Recreation,ResElevation.rdf,Tiber.Pool Elevation
+Tiber Hydropower Production,Energy.rdf,Tiber.Energy
+Lower Marias 7-Day Minimum Flows,GageFlow.rdf,06102050 Marias nr Loma.Gage Inflow

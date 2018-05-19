@@ -1,0 +1,5 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"CC All,GeneralMRM,Baseline",Baseline,Baseline,CC
+"CC All,GeneralMRM,FlushingFlows",FlushingFlows,Flushing Flows,CC
+"PaleoEvent,GeneralMRM,Baseline",Baseline,Baseline,PaleoEvent
+"PaleoEvent,GeneralMRM,FlushingFlows",FlushingFlows,Flushing Flows,PaleoEvent

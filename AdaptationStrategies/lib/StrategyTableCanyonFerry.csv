@@ -1,0 +1,5 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"CC All,GeneralMRM,Baseline",Baseline,Baseline,CC
+"CC All,GeneralMRM,CanyonFerryNewUser50kAcFt",NewUser50kAcFt,New 50k Ac-Ft User,CC
+"PaleoEvent,GeneralMRM,Baseline",Baseline,Baseline,PaleoEvent
+"PaleoEvent,GeneralMRM,CanyonFerryNewUser50kAcFt",NewUser50kAcFt,New 50k Ac-Ft User,PaleoEvent

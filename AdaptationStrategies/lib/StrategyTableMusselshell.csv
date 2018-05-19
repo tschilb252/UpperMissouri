@@ -1,0 +1,7 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"CC All,GeneralMRM,Baseline",Baseline,Baseline,CC
+"CC All,GeneralMRM,MusselshellAdapt1",Adapt1,New Reservoir and Operations,CC
+"CC All,GeneralMRM,MusselshellAdapt2",Adapt2,New Reservoir,CC
+"PaleoEvent,GeneralMRM,Baseline",Baseline,Baseline,PaleoEvent
+"PaleoEvent,GeneralMRM,MusselshellAdapt1",Adapt1,New Reservoir and Operations,PaleoEvent
+"PaleoEvent,GeneralMRM,MusselshellAdapt2",Adapt2,New Reservoir,PaleoEvent

@@ -1,0 +1,9 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"CC All,GeneralMRM,Baseline",Baseline,Baseline,CC
+"CC All,GeneralMRM,Beaverhead100cfsWinterMax",100cfsWinterMax,100cfs Max Winter Flow,CC
+"CC All,GeneralMRM,Beaverhead100cfsWinterMaxIncFloodPool",100cfsWinterMaxIncFloodPool,100cfs Max Winter Flow and Increase Flood Pool Elev.,CC
+"CC All,GeneralMRM,BeaverheadIncFloodPool",IncFloodPool,Increase Flood Pool Elev.,CC
+"PaleoEvent,GeneralMRM,Baseline",Baseline,Baseline,PaleoEvent
+"PaleoEvent,GeneralMRM,Beaverhead100cfsWinterMax",100cfsWinterMax,100cfs Max Winter Flow,PaleoEvent
+"PaleoEvent,GeneralMRM,Beaverhead100cfsWinterMaxIncFloodPool",100cfsWinterMaxIncFloodPool,100cfs Max Winter Flow and Increase Flood Pool Elev.,PaleoEvent
+"PaleoEvent,GeneralMRM,BeaverheadIncFloodPool",IncFloodPool,Increase Flood Pool Elev.,PaleoEvent

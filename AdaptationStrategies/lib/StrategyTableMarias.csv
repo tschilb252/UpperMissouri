@@ -1,0 +1,5 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"CC All,GeneralMRM,Baseline",Baseline,Baseline,CC
+"CC All,GeneralMRM,TiberAdd200kAcFt",Add200kAcFt,New 200k Ac-Ft User,CC
+"PaleoEvent,GeneralMRM,Baseline",Baseline,Baseline,PaleoEvent
+"PaleoEvent,GeneralMRM,TiberAdd200kAcFt",Add200kAcFt,New 200k Ac-Ft User,PaleoEvent
