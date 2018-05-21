@@ -1,9 +1,9 @@
 Model                                                               Table Updates  -  'All' Runs  -  'PaleoEvent' Runs  -  'PaleoResequenced' Runs
 ----------------------------------------------------------------------------------------------------------------------------------------------
-20180423_UMBIA.mdl.gz                                                     X        -   X          -   X                 -
-20180423_UMBIA_All_Buildout.mdl.gz                                        X        -              -                     -
-20180423_UMBIA_All_Flushing.mdl.gz                                        X        -              -                     -
-20180423_UMBIA_All_IncIrrigEffic.mdl.gz                                   X        -              -                     -
+20180507_UMBIA.mdl.gz                                                     X        -   X          -   X                 -
+20180517_UMBIA_All_Buildout.mdl.gz                                        X        -              -                     -
+20180517_UMBIA_All_Flushing.mdl.gz                                        X        -   X          -                     -
+20180516_UMBIA_All_IncIrrigEffic.mdl.gz                                   X        -   X          -   X                 -
 20180423_UMBIA_Beaverhead_100cfsWintMax.mdl.gz                            X        -   X          -   X                 -   X
 20180423_UMBIA_Beaverhead_IncFloodPool.mdl.gz                             X        -   X          -   X                 -   X
 20180423_UMBIA_Beaverhead_IncFloodPool100cfsWintMax.mdl.gz                X        -   X          -   X                 -   X
@@ -11,5 +11,9 @@ Model                                                               Table Update
 20180423_UMBIA_Gallatin_CanyonFerryPipeline.mdl.gz                        X        -   X          -   X                 -
 20180423_UMBIA_Gallatin_InfilGallery.mdl.gz                               X        -   X          -   X                 -
 20180423_UMBIA_MusselshellAdapt1.mdl.gz                                   X        -   X          -   X                 -
-20180423_UMBIA_MusselshellAdapt2.mdl.gz                                   X        -   X          -   X                 -
+20180423_UMBIA_MusselshellAdapt2.mdl.gz                                   X        -   X          -   X                 -   X
 20180423_UMBIA_Tiber_Add200kAcFt.mdl.gz                                   X        -   X          -   X                 -
+20180423_UMBIA_BigHole_40cfsSummerMin.mdl.gz                              X        -   X          -                     -
+20180423_UMBIA_BigHole_20cfsSummerMin.mdl.gz                              X        -   X          -                     -
+20180423_UMBIA_BigHole_N0SummerMin.mdl.gz                                 X        -   X          -                     -
+# ADD SUN MODELS
