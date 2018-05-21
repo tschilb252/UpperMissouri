@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Increased Irrigation Efficiency Strategy
-#' Last Modified May 18 2018
+#' Last Modified May 21 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -24,14 +24,14 @@ ScenTbl = fread('lib/ScenarioTable.csv')
 StgyTbl = fread('lib/StrategyTableIncIrrigEffic.csv')
 MeasTbl = fread('lib/MeasureTableIncIrrigEffic.csv')
 
-ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
+ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
+  'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
 #################################################
 #'  Read in Data
 
 fileList = unique(MeasTbl$File)
 stgyList = unique(StgyTbl$Strategy)
 ctFiles = nrow(StgyTbl)
-ctFiles = 2 #remive when PaleoEvent runs are done
 
 fileTmp = fileList[1]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
@@ -44,8 +44,15 @@ for(iterFile in 1:ctFiles){
   datTmpDT = Rdf2dt(datTmp, slotListTmp)
   datTmpDT$ScenarioSet = ScenarioSet
   datTmpDT$Strategy = Strategy
-  datMeas = bind_rows(datMeas, datTmpDT)
+  # summarise data to reduce the size
+  datTmpDTAgg = datTmpDT %>%
+    mutate(Wyear = wyear(Date)) %>%
+    dplyr::rename(Slot = RiverWareSlot) %>%
+    group_by(Wyear, Trace, ScenarioSet, Strategy, Slot) %>%
+    dplyr::summarise(Value = sum(Value))
+  datMeas = bind_rows(datMeas, datTmpDTAgg)
 }
+
 # summarise data to reduce the size
 datMeasAgg = datMeas %>%
   mutate(Wyear = wyear(Date)) %>%
@@ -81,13 +88,16 @@ datMeasAvgFut = datMeasAvg %>%
 datMeasAvgFutFl = datMeasAvgFut %>%
   filter(Period %in% c('2050s', 'Historical') | is.na(Period))
 
-datMeasAvgFutFl$Scenario = factor(datMeasAvgFutFl$Scenario, levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'MID', 'LDP', 'MIP', 'LPP')))
+datMeasAvgFutFl$Scenario = factor(datMeasAvgFutFl$Scenario,
+  levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
+    'MID', 'LDP', 'MIP', 'LPP')))
 datMeasAvgFutFl = datMeasAvgFutFl %>% mutate(ValueColScle = ValueChange * -1)
 
 datMeasPlot = datMeasAvgFutFl
 
 datMeasPlot = datMeasPlot %>% left_join(StgyTbl)
-datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab, levels = c('Baseline', 'Increase Irrigation Efficiency'))
+datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
+  levels = c('Baseline', 'Increase Irrigation Efficiency'))
 
 
 ggplot(data = datMeasPlot, aes(x = Measure, y = Scenario,
@@ -106,8 +116,11 @@ ggplot(data = datMeasPlot, aes(x = Measure, y = Scenario,
     axis.ticks=element_blank(),
     axis.title.x=element_blank(),
     axis.title.y=element_blank(),legend.position="none",
-    panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
-    panel.grid.minor=element_blank(),plot.background=element_blank(),
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
     strip.background = element_blank()) +
     coord_equal()
 

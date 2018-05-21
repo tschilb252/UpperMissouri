@@ -24,7 +24,8 @@ ScenTbl = fread('lib/ScenarioTable.csv')
 StgyTbl = fread('lib/StrategyTableMusselshell.csv')
 MeasTbl = fread('lib/MeasureTableMusselshell.csv')
 
-ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
+ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
+  'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
 #################################################
 #'  Read in Data
 # Musselshell outputs for scenario runs are different from baseline
@@ -35,20 +36,24 @@ fileList = unique(MeasTbl$File)
 stgyList = unique(StgyTbl$Strategy)
 ctFiles = nrow(StgyTbl)
 
-fileTmp = fileList[1]
+fileTmp = fileList[1] # storage in new reservoir
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas = data.table()
 for(iterFile in 1:ctFiles){
   filePath = paste0(dirInp, StgyTbl$Directory[iterFile], '/', fileTmp)
   ScenarioSet = StgyTbl$ScenarioSet[iterFile]
   Strategy =  StgyTbl$Strategy[iterFile]
-  datTmp = read.rdf(filePath)
-  datTmpDT = Rdf2dt(datTmp, slotListTmp)
+  if(Strategy != 'Baseline'){
+    datTmp = read.rdf(filePath)
+    datTmpDT = Rdf2dt(datTmp, slotListTmp)
+  } else {
+    datTmpDT
+  }
   datTmpDT$ScenarioSet = ScenarioSet
   datTmpDT$Strategy = Strategy
   datMeas = bind_rows(datMeas, datTmpDT)
 }
-
+datMeas2 = datMeas # two measures use the same data
 datMeas = datMeas %>%
   left_join(ScenTbl) %>%
   filter(Scenario %in% ScenList) %>%
@@ -78,8 +83,11 @@ datMeasAvgFutFl = datMeasAvgFut %>%
 filter(Period %in% c('2050s', 'Historical') | is.na(Period))
 datMeasAvgFutFl$Measure = 'Shortage'
 
-datMeasAvgFutFl$Scenario = factor(datMeasAvgFutFl$Scenario, levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'MID', 'LDP', 'MIP', 'LPP')))
-datMeasAvgFutFl = datMeasAvgFutFl %>% mutate(ValueColScle = ValueChange * -1)
+datMeasAvgFutFl$Scenario = factor(datMeasAvgFutFl$Scenario, 
+  levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
+    'MID', 'LDP', 'MIP', 'LPP')))
+
+
 
 fileTmp = fileList[2]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
