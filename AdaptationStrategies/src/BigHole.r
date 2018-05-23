@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Big Hole River Basin
-#' Last Modified April 27 2018
+#' Last Modified May 22 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -24,7 +24,8 @@ ScenTbl = fread('lib/ScenarioTable.csv')
 StgyTbl = fread('lib/StrategyTableBigHole.csv')
 MeasTbl = fread('lib/MeasureTableBigHole.csv')
 
-ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
+ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
+  'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
 #################################################
 #'  Read in Data
 
@@ -71,12 +72,8 @@ datMeasAvgFut = datMeasAvg %>%
   mutate(ValueHist = datMeasAvgHist$Value) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeasAvgFutFl = datMeasAvgFut %>%
-filter(Period %in% c('2050s', 'Historical') | is.na(Period))
-datMeasAvgFutFl$Measure = 'Shortage'
-
-datMeasAvgFutFl$Scenario = factor(datMeasAvgFutFl$Scenario, levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'MID', 'LDP', 'MIP', 'LPP')))
-datMeasAvgFutFl = datMeasAvgFutFl %>% mutate(ValueColScle = ValueChange * -1)
+datMeasAvgFut$Measure = 'Shortage'
+datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange * -1)
 
 fileTmp = fileList[2]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
@@ -118,22 +115,38 @@ datMeas2AvgFut = datMeas2Avg %>%
   left_join(datMeas2AvgHist) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeas2AvgFutFl = datMeas2AvgFut %>%
-  filter(Period %in% c('2050s', 'Historical') | is.na(Period))
-
 measLabTbl = data.table(Month = 1:12, Measure = paste0(month.abb, ' In-Stream Flow'))
 
-datMeas2AvgFutFl = datMeas2AvgFutFl %>%
+datMeas2AvgFut = datMeas2AvgFutFl %>%
   left_join(measLabTbl)
 
-datMeas2AvgFutFl$Scenario = factor(datMeas2AvgFutFl$Scenario, levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'MID', 'LDP', 'MIP', 'LPP')))
-datMeas2AvgFutFl = datMeas2AvgFutFl %>% mutate(ValueColScle = ValueChange)
+datMeas2AvgFut = datMeas2AvgFut %>% mutate(ValueColScle = ValueChange)
 
-datMeasPlot = bind_rows(datMeasAvgFutFl, datMeas2AvgFutFl)
+datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut)
 
+datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
+  levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
+    'MID', 'LDP', 'MIP', 'LPP')))
 datMeasPlot = datMeasPlot %>% left_join(StgyTbl)
-datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab, levels = c('Baseline', '40cfs Summer ISF', '20cfs Summer ISF', 'No Summer ISF'))
+datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
+  levels = unique(StgyTbl$StrategyLab))
 
+datMeasPlot$Measure = factor(datMeasPlot$Measure ,
+  levels = unique(MeasTbl$Measure))
+
+# Plot defs
+pctLow = 5
+pctHigh = 100
+colPal = c('#DA4325', '#ECA14E', '#F2F0DE', '#5CC3AF', '#0A6265')
+
+datMeasPlot = datMeasPlot %>%
+  mutate(ValueTxt = ifelse(abs(ValueColScle ) > pctHigh, '•', '')) %>%
+  mutate(ValueColScle = ifelse(abs(ValueColScle) < pctLow, 0,
+  ifelse(ValueColScle > pctHigh, pctHigh,
+    ifelse(ValueColScle < -1 * pctHigh, -1 * pctHigh, ValueColScle))))
+
+datMeasPlotFl = datMeasPlot %>%
+  filter(Period %in% c('2050s', 'Historical') | is.na(Period))
 
 ggplot(data = datMeasPlot, aes(x = Measure, y = Scenario,
   fill = ValueColScle, label = round(ValueChange))) +

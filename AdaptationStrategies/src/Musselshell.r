@@ -83,9 +83,10 @@ datMeasAvgFutFl = datMeasAvgFut %>%
 filter(Period %in% c('2050s', 'Historical') | is.na(Period))
 datMeasAvgFutFl$Measure = 'Shortage'
 
-datMeasAvgFutFl$Scenario = factor(datMeasAvgFutFl$Scenario, 
+datMeasAvgFutFl$Scenario = factor(datMeasAvgFutFl$Scenario,
   levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
     'MID', 'LDP', 'MIP', 'LPP')))
+
 
 
 
