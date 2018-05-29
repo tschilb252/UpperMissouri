@@ -135,13 +135,33 @@ for(iterFile in 1:ctFiles){
   datMeas3 = bind_rows(datMeas3, datTmpDT)
 }
 
+# 7-day low flows
+# datMeas3Agg = datMeas3 %>%
+#   mutate(Wyear = wyear(Date), DOWY = dowy(Date)) %>%
+#   dplyr::rename(Slot = RiverWareSlot) %>%
+#   group_by(Wyear, Trace, ScenarioSet, Strategy, Slot) %>%
+#   mutate(Value = rollapply(data = Value, width = 7, FUN = mean,
+#     align = 'right', fill = NA, na.rm = T)) %>%
+#   dplyr::summarise(Value = min(Value, na.rm = T))
+#
+# datMeas3Agg = datMeas3Agg %>%
+#   left_join(MeasTbl) %>%
+#   left_join(ScenTbl) %>%
+#   filter(Scenario %in% ScenList) %>%
+#   mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
+#
+# datMeas3Avg = datMeas3Agg %>%
+#   group_by(Measure, Scenario, Period, Strategy) %>%
+#   summarise(Value = mean(Value)) %>%
+#   ungroup()
+
+# August mean flow change
 datMeas3Agg = datMeas3 %>%
-  mutate(Wyear = wyear(Date), DOWY = dowy(Date)) %>%
+  mutate(Wyear = wyear(Date), Month = month(Date)) %>%
   dplyr::rename(Slot = RiverWareSlot) %>%
+  filter(Month == 8) %>%
   group_by(Wyear, Trace, ScenarioSet, Strategy, Slot) %>%
-  mutate(Value = rollapply(data = Value, width = 7, FUN = mean,
-    align = 'right', fill = NA, na.rm = T)) %>%
-  dplyr::summarise(Value = min(Value, na.rm = T))
+  dplyr::summarise(Value = mean(Value, na.rm = T))
 
 datMeas3Agg = datMeas3Agg %>%
   left_join(MeasTbl) %>%
