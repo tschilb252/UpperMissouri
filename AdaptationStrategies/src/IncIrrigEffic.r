@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Increased Irrigation Efficiency Strategy
-#' Last Modified May 21 2018
+#' Last Modified May 29 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -183,7 +183,7 @@ datMeas3AvgFut = datMeas3Avg %>%
   left_join(datMeas3AvgHist) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeas3AvgFut = datMeas3AvgFut %>% mutate(ValueColScle = ValueChange * -1)
+datMeas3AvgFut = datMeas3AvgFut %>% mutate(ValueColScle = ValueChange)
 
 datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut)
 datMeasPlot$Scenario = factor(datMeasPlot$Scenario,

@@ -1,5 +1,6 @@
-﻿Measure,File,Slot
+Measure,File,Slot
 New Reservoir EOWY Storage,ResStorage.rdf,Musselshell_New Reservoir.Storage
+New Reservoir Refill Percentage,ResStorage.rdf,Musselshell_New Reservoir.Storage
 Lower Musselshell 7-Day Low Flows,ReachOutflow.rdf,Musselshell_Mosby to Fort Peck.Outflow
 Lower Irrigators Shortages,DepletionShortage.rdf,Water Users Musselshell_Mosby to Fort Peck:New Res NWC.Depletion Shortage
 Lower Irrigators Shortages,DepletionShortage.rdf,Water Users Musselshell_Mosby to Fort Peck:Natural w Contract.Depletion Shortage
