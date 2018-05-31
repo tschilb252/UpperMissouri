@@ -56,7 +56,7 @@ datMeasAgg = datMeas %>%
     mutate(Value = Value * 1.98347) %>%     # convert cfs to ac-ft
     mutate(WYear = wyear(Date)) %>%         # add water year column
     group_by(Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
-    summarise(Value = sum(Value)) %>%       # sum up shortages by above groups
+    summarise(Value = sum(Value)) %>%       # sum up diversions
     ungroup()
 
 datMeasAvg = datMeasAgg %>%
@@ -72,8 +72,8 @@ datMeasAvgFut = datMeasAvg %>%
   mutate(ValueHist = datMeasAvgHist$Value) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeasAvgFut$Measure = 'Shortage'
-datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange * -1)
+datMeasAvgFut$Measure = 'Irrigation Diversion'
+datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange)
 
 fileTmp = fileList[2]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
@@ -245,6 +245,7 @@ datMeas5AvgFut = datMeas5AvgFut %>%
 
 datMeas5AvgFut = datMeas5AvgFut %>% mutate(ValueColScle = ValueChange)
 
+# Combine measures together
 datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut,
   datMeas4AvgFut, datMeas5AvgFut)
 
