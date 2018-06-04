@@ -1,9 +1,9 @@
 ﻿Measure,File,Slot
-Clark Canyon EOWY Storage,ResStorage.rdf,Clark Canyon.Storage
-Clark Canyon In Flood Pool,ResElevation.rdf,Clark Canyon.Pool Elevation
+Clark Canyon EOWY Storage,ResStorage.rdf,Clark Canyon Res.Storage
+Clark Canyon In Flood Pool,ResElevation.rdf,Clark Canyon Res.Pool Elevation
 East Bench Allocation ,Allocations.rdf,Clark Canyon Res Data.District Annual Allocation Fraction
 CCWSC Allocation,Allocations.rdf,Clark Canyon Res Data.Company Annual Allocation Fraction
 Senior Users Allocation,Allocations.rdf,Clark Canyon Res Data.Senior Annual Allocation Fraction
-Upper Beaverhead 7-Day Low Flows,GageFlow.rdf,06016000 Beaverhead at Barretts.Gage Inflow
-Lower Beaverhead 7-Day Low Flows,GageFlow.rdf,06018500 Beaverhead nr Twin Bridges.Gage Inflow
+Upper Beaverhead August Flows,GageFlow.rdf,06016000 Beaverhead at Barretts.Gage Inflow
+Lower Beaverhead August Low Flows,GageFlow.rdf,06018500 Beaverhead nr Twin Bridges.Gage Inflow
 Clark Canyon Recreation,ResElevation.rdf,Clark Canyon.Pool Elevation

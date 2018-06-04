@@ -1,5 +1,5 @@
 ﻿Measure,File,Slot
-Missouri River at Holter 7-Day Low Flows,GageFlow.rdf,06066500 Missouri bl Holter Dam.Gage Inflow
+Missouri River at Holter August Flows,GageFlow.rdf,06066500 Missouri bl Holter Dam.Gage Inflow
 Canyon Ferry Hydropower Production,Energy.rdf,Canyon Ferry.Energy
 Northwestern Energy Hydropower Production,Energy.rdf,Black Eagle.Energy
 Northwestern Energy Hydropower Production,Energy.rdf,Cochrane.Energy
@@ -9,13 +9,13 @@ Northwestern Energy Hydropower Production,Energy.rdf,Morony.Energy
 Northwestern Energy Hydropower Production,Energy.rdf,Rainbow.Energy
 Northwestern Energy Hydropower Production,Energy.rdf,Ryan.Energy
 Toston Hydropower Production,Energy.rdf,Toston Data.Toston Power
-Canyon Ferry Deliveries,Diversion.rdf,Water Users HVID Contract Only.Diversion
-Canyon Ferry Deliveries,Diversion.rdf,Water Users HVID Irrigation above Res.Diversion
-Canyon Ferry Deliveries,Diversion.rdf,Water Users HVID Res to Prickly Pear.Diversion
-Canyon Ferry Deliveries,Diversion.rdf,Water Users HVID Ten Mile NWC.Diversion
-Canyon Ferry Deliveries,Diversion.rdf,Water Users Prickly Pear_Headwaters.Diversion
-Canyon Ferry Deliveries,Diversion.rdf,Water Users Prickly Pear_Headwaters to HV Canal.Diversion
-Canyon Ferry Deliveries,Diversion.rdf,Water Users Prickly Pear_HV Canal to Ten Mile.Diversion
-Canyon Ferry Deliveries,Diversion.rdf,Water Users Silver Creek.Diversion
-Canyon Ferry Deliveries,Diversion.rdf,Water Users Ten Mile.Diversion
-Canyon Ferry Deliveries,Diversion.rdf,New Canyon Ferry Water User.Diversion
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users HVID Contract Only.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users HVID Irrigation above Res.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users HVID Res to Prickly Pear.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users HVID Ten Mile NWC.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users Prickly Pear_Headwaters.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users Prickly Pear_Headwaters to HV Canal.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users Prickly Pear_HV Canal to Ten Mile.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users Silver Creek.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users Ten Mile.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,New Canyon Ferry Water User.Diversion Shortage

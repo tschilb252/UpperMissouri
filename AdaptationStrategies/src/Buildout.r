@@ -1,9 +1,9 @@
 #################################################
-#' @title Upper Missouri Basin Study - Flushing Flows
+#' @title Upper Missouri Basin Study - Buildout
 #' Figures
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
-#' Basin Study, Flushing Flows (Ecological Flows) Strategy
+#' Basin Study, Buildout (Inc. Consumptive Use) Strategy
 #' Last Modified May 31 2018
 #################################################
 library(tidyverse)
@@ -21,8 +21,8 @@ dirOup = 'T:/PlanningOperations/Staff/DBROMAN/UMBIA/AdaptationStrategies/Figures
 
 # LookUp Table Locations
 ScenTbl = fread('lib/ScenarioTable.csv')
-StgyTbl = fread('lib/StrategyTableFlushingFlows.csv')
-MeasTbl = fread('lib/MeasureTableFlushingFlows.csv')
+StgyTbl = fread('lib/StrategyTableBuildout.csv')
+MeasTbl = fread('lib/MeasureTableBuildout.csv')
 
 ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
 #################################################
@@ -211,5 +211,5 @@ datMeasPlotFl = datMeasPlot %>%
     ) +
       coord_equal()
 
-ggsave(paste0(dirOup, 'FlushingFlowsGrid.png'), height = 10, width = 8)
-write.csv(datMeasPlot, paste0(dirOup, 'FlushingFlowsGrid.csv'), row.names = F, quote = F)
+ggsave(paste0(dirOup, 'BuildoutGrid.png'), height = 10, width = 8)
+write.csv(datMeasPlot, paste0(dirOup, 'BuildoutGrid.csv'), row.names = F, quote = F)

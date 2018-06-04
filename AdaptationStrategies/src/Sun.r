@@ -1,9 +1,9 @@
 #################################################
-#' @title Upper Missouri Basin Study - Flushing Flows
+#' @title Upper Missouri Basin Study - Sun
 #' Figures
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
-#' Basin Study, Flushing Flows (Ecological Flows) Strategy
+#' Basin Study, Sun Strategy
 #' Last Modified May 31 2018
 #################################################
 library(tidyverse)
@@ -21,8 +21,8 @@ dirOup = 'T:/PlanningOperations/Staff/DBROMAN/UMBIA/AdaptationStrategies/Figures
 
 # LookUp Table Locations
 ScenTbl = fread('lib/ScenarioTable.csv')
-StgyTbl = fread('lib/StrategyTableFlushingFlows.csv')
-MeasTbl = fread('lib/MeasureTableFlushingFlows.csv')
+StgyTbl = fread('lib/StrategyTableSun.csv')
+MeasTbl = fread('lib/MeasureTableSun.csv')
 
 ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
 #################################################
@@ -40,24 +40,30 @@ for(iterFile in 1:ctFiles){
   ScenarioSet = StgyTbl$ScenarioSet[iterFile]
   Strategy =  StgyTbl$Strategy[iterFile]
   datTmp = read.rdf(filePath)
-  datTmpDT = Rdf2dt(datTmp, slotListTmp)
+  if(Strategy != 'Baseline'){
+    datTmpDT = Rdf2dt(datTmp, slotListTmp)
+  } else {
+    slotListTmp2 = slotListTmp[1:(length(slotListTmp) - 1)]
+    datTmpDT = Rdf2dt(datTmp, slotListTmp2)
+  }
   datTmpDT$ScenarioSet = ScenarioSet
   datTmpDT$Strategy = Strategy
   datMeas = bind_rows(datMeas, datTmpDT)
 }
 
-datMeasAgg = datMeas %>%
-  mutate(Wyear = wyear(Date), Month = month(Date)) %>%
-  dplyr::rename(Slot = RiverWareSlot) %>%
-  filter(Month == 8) %>%
-  group_by(Wyear, Trace, ScenarioSet, Strategy, Slot) %>%
-  dplyr::summarise(Value = mean(Value, na.rm = T))
-
-datMeasAgg = datMeasAgg %>%
-  left_join(MeasTbl) %>%
+datMeas = datMeas %>%
   left_join(ScenTbl) %>%
   filter(Scenario %in% ScenList) %>%
   mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
+
+datMeasAgg = datMeas %>%
+    mutate(Value = Value * 1.98347) %>%     # convert cfs to ac-ft
+    mutate(WYear = wyear(Date)) %>%         # add water year column
+    dplyr::rename(Slot = RiverWareSlot) %>%
+    left_join(MeasTbl) %>%
+    group_by(Measure, Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
+    summarise(Value = sum(Value)) %>%       # sum up shortages by above groups
+    ungroup()
 
 datMeasAvg = datMeasAgg %>%
   group_by(Measure, Scenario, Period, Strategy) %>%
@@ -73,7 +79,7 @@ datMeasAvgFut = datMeasAvg %>%
   left_join(datMeasAvgHist) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange)
+datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange * -1)
 
 fileTmp = fileList[2]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
@@ -128,18 +134,18 @@ for(iterFile in 1:ctFiles){
   datMeas3 = bind_rows(datMeas3, datTmpDT)
 }
 
-datMeas3 = datMeas3 %>%
+datMeas3Agg = datMeas3 %>%
+  mutate(Wyear = wyear(Date), Month = month(Date)) %>%
+  dplyr::rename(Slot = RiverWareSlot) %>%
+  filter(Month == 8) %>%
+  group_by(Wyear, Trace, ScenarioSet, Strategy, Slot) %>%
+  dplyr::summarise(Value = mean(Value, na.rm = T))
+
+datMeas3Agg = datMeas3Agg %>%
+  left_join(MeasTbl) %>%
   left_join(ScenTbl) %>%
   filter(Scenario %in% ScenList) %>%
   mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
-
-datMeas3Agg = datMeas3 %>%
-    mutate(WYear = wyear(Date)) %>%         # add water year column
-    dplyr::rename(Slot = RiverWareSlot) %>%
-    left_join(MeasTbl) %>%
-    group_by(Measure, Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
-    summarise(Value = sum(Value)) %>%       # sum up shortages by above groups
-    ungroup()
 
 datMeas3Avg = datMeas3Agg %>%
   group_by(Measure, Scenario, Period, Strategy) %>%
@@ -167,7 +173,7 @@ datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
   levels = unique(StgyTbl$StrategyLab))
 
 datMeasPlot$Measure = factor(datMeasPlot$Measure ,
-  levels = MeasTbl$Measure)
+  levels = unique(MeasTbl$Measure))
 
 # Plot defs
 pctLow = 5
@@ -211,5 +217,5 @@ datMeasPlotFl = datMeasPlot %>%
     ) +
       coord_equal()
 
-ggsave(paste0(dirOup, 'FlushingFlowsGrid.png'), height = 10, width = 8)
-write.csv(datMeasPlot, paste0(dirOup, 'FlushingFlowsGrid.csv'), row.names = F, quote = F)
+ggsave(paste0(dirOup, 'SunGrid.png'), height = 10, width = 8)
+write.csv(datMeasPlot, paste0(dirOup, 'SunGrid.csv'), row.names = F, quote = F)

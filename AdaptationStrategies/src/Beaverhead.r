@@ -1,9 +1,9 @@
 #################################################
-#' @title Upper Missouri Basin Study - Flushing Flows
-#' Figures
+#' @title Upper Missouri Basin Study - Beaverhead
+#'        Basin Figures
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
-#' Basin Study, Flushing Flows (Ecological Flows) Strategy
+#' Basin Study, Beaverhead River Basin
 #' Last Modified May 31 2018
 #################################################
 library(tidyverse)
@@ -21,10 +21,11 @@ dirOup = 'T:/PlanningOperations/Staff/DBROMAN/UMBIA/AdaptationStrategies/Figures
 
 # LookUp Table Locations
 ScenTbl = fread('lib/ScenarioTable.csv')
-StgyTbl = fread('lib/StrategyTableFlushingFlows.csv')
-MeasTbl = fread('lib/MeasureTableFlushingFlows.csv')
+StgyTbl = fread('lib/StrategyTableBeaverhead.csv')
+MeasTbl = fread('lib/MeasureTableBeaverhead.csv')
 
-ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
+ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
+  'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
 #################################################
 #'  Read in Data
 
@@ -46,37 +47,31 @@ for(iterFile in 1:ctFiles){
   datMeas = bind_rows(datMeas, datTmpDT)
 }
 
-datMeasAgg = datMeas %>%
-  mutate(Wyear = wyear(Date), Month = month(Date)) %>%
-  dplyr::rename(Slot = RiverWareSlot) %>%
-  filter(Month == 8) %>%
-  group_by(Wyear, Trace, ScenarioSet, Strategy, Slot) %>%
-  dplyr::summarise(Value = mean(Value, na.rm = T))
-
-datMeasAgg = datMeasAgg %>%
-  left_join(MeasTbl) %>%
+datMeas = datMeas %>%
   left_join(ScenTbl) %>%
   filter(Scenario %in% ScenList) %>%
   mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
 
-datMeasAvg = datMeasAgg %>%
-  group_by(Measure, Scenario, Period, Strategy) %>%
-  summarise(Value = mean(Value)) %>%
-  ungroup()
+datMeasAvg = datMeas %>%
+    mutate(WYear = wyear(Date), Month = month(Date), Day = day(Date)) %>%         # add water year and month columns
+    filter(Month == 9, Day == 30) %>%
+    group_by(Scenario, Period, Strategy) %>%   # group by scenario, period, and strategy
+    summarise(Value = mean(Value)) %>%       # mean eowy storage
+    ungroup()
 
 datMeasAvgHist = datMeasAvg %>%
   filter(Scenario == 'Historical', Strategy == 'Baseline') %>%
-  rename(ValueHist = Value) %>%
-  dplyr::select(-Scenario, -Period, -Strategy)
+  dplyr::select(-Scenario, -Period)
 
 datMeasAvgFut = datMeasAvg %>%
-  left_join(datMeasAvgHist) %>%
+  mutate(ValueHist = datMeasAvgHist$Value) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
+datMeasAvgFut$Measure = 'EOWY Storage'
 datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange)
 
 fileTmp = fileList[2]
-slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
+slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot[1]
 datMeas2 = data.table()
 for(iterFile in 1:ctFiles){
   filePath = paste0(dirInp, StgyTbl$Directory[iterFile], '/', fileTmp)
@@ -89,29 +84,35 @@ for(iterFile in 1:ctFiles){
   datMeas2 = bind_rows(datMeas2, datTmpDT)
 }
 
+ValueThresh = 5546.1 # Clark Canyon flood pool elev.
+
 datMeas2 = datMeas2 %>%
   left_join(ScenTbl) %>%
   filter(Scenario %in% ScenList) %>%
   mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
 
-datMeas2Avg = datMeas2 %>%
-    mutate(WYear = wyear(Date), Month = month(Date), Day = day(Date)) %>%         # add water year and month columns
-    dplyr::rename(Slot = RiverWareSlot) %>%
-    left_join(MeasTbl) %>%
-    filter(Month == 9, Day == 30) %>%
-    group_by(Measure, Scenario, Period, Strategy) %>%   # group by scenario, period, and strategy
-    summarise(Value = mean(Value)) %>%       # mean eowy storage
+datMeas2Agg = datMeas2 %>%
+    mutate(WYear = wyear(Date), Month = month(Date)) %>%         # add water year and month columns
+    filter(Month >= 4, Month <= 10, WYear >= 1951) %>%
+    mutate(ValueExc = ifelse(Value >= ValueThresh, 1, 0)) %>%
+    group_by(Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
+    summarise(Value = sum(ValueExc) / n()) %>%       # sum up shortages by above groups
     ungroup()
+
+datMeas2Avg = datMeas2Agg %>%
+  group_by(Scenario, Period, Strategy) %>%
+  summarise(Value = mean(Value)) %>%
+  ungroup()
 
 datMeas2AvgHist = datMeas2Avg %>%
   filter(Scenario == 'Historical', Strategy == 'Baseline') %>%
-  rename(ValueHist = Value) %>%
-  dplyr::select(-Scenario, -Period, -Strategy)
+  dplyr::select(-Scenario, -Period)
 
 datMeas2AvgFut = datMeas2Avg %>%
-  left_join(datMeas2AvgHist) %>%
+  mutate(ValueHist = datMeas2AvgHist$Value) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
+datMeas2AvgFut$Measure = 'Days in Flood Pool'
 datMeas2AvgFut = datMeas2AvgFut %>% mutate(ValueColScle = ValueChange)
 
 fileTmp = fileList[3]
@@ -137,9 +138,7 @@ datMeas3Agg = datMeas3 %>%
     mutate(WYear = wyear(Date)) %>%         # add water year column
     dplyr::rename(Slot = RiverWareSlot) %>%
     left_join(MeasTbl) %>%
-    group_by(Measure, Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
-    summarise(Value = sum(Value)) %>%       # sum up shortages by above groups
-    ungroup()
+    filter(!is.na(Value))
 
 datMeas3Avg = datMeas3Agg %>%
   group_by(Measure, Scenario, Period, Strategy) %>%
@@ -157,7 +156,78 @@ datMeas3AvgFut = datMeas3Avg %>%
 
 datMeas3AvgFut = datMeas3AvgFut %>% mutate(ValueColScle = ValueChange)
 
-datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut)
+fileTmp = fileList[4]
+slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
+datMeas4 = data.table()
+for(iterFile in 1:ctFiles){
+  filePath = paste0(dirInp, StgyTbl$Directory[iterFile], '/', fileTmp)
+  ScenarioSet = StgyTbl$ScenarioSet[iterFile]
+  Strategy =  StgyTbl$Strategy[iterFile]
+  datTmp = read.rdf(filePath)
+  datTmpDT = Rdf2dt(datTmp, slotListTmp)
+  datTmpDT$ScenarioSet = ScenarioSet
+  datTmpDT$Strategy = Strategy
+  datMeas4 = bind_rows(datMeas4, datTmpDT)
+}
+
+datMeas4Agg = datMeas4 %>%
+  mutate(Wyear = wyear(Date), Month = month(Date)) %>%
+  dplyr::rename(Slot = RiverWareSlot) %>%
+  filter(Month == 8) %>%
+  group_by(Wyear, Trace, ScenarioSet, Strategy, Slot) %>%
+  dplyr::summarise(Value = mean(Value, na.rm = T))
+
+datMeas4Agg = datMeas4Agg %>%
+  left_join(MeasTbl) %>%
+  left_join(ScenTbl) %>%
+  filter(Scenario %in% ScenList) %>%
+  mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
+
+datMeas4Avg = datMeas4Agg %>%
+  group_by(Measure, Scenario, Period, Strategy) %>%
+  summarise(Value = mean(Value)) %>%
+  ungroup()
+
+datMeas4AvgHist = datMeas4Avg %>%
+  filter(Scenario == 'Historical', Strategy == 'Baseline') %>%
+  rename(ValueHist = Value) %>%
+  dplyr::select(-Scenario, -Period, -Strategy)
+
+datMeas4AvgFut = datMeas4Avg %>%
+  left_join(datMeas4AvgHist) %>%
+  mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
+
+datMeas4AvgFut = datMeas4AvgFut %>% mutate(ValueColScle = ValueChange)
+
+datMeas5 = datMeas2 # uses the same data
+ValueThresh = 5498 # Clark Canyon flood pool elev.
+
+datMeas5Agg = datMeas5 %>%
+    mutate(WYear = wyear(Date), Month = month(Date)) %>%         # add water year and month columns
+    filter(Month >= 4, Month <= 10, WYear >= 1951) %>%
+    mutate(ValueExc = ifelse(Value >= ValueThresh, 1, 0)) %>%
+    group_by(Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
+    summarise(Value = sum(ValueExc) / n()) %>%       # sum up shortages by above groups
+    ungroup()
+
+datMeas5Avg = datMeas5Agg %>%
+  group_by(Scenario, Period, Strategy) %>%
+  summarise(Value = mean(Value)) %>%
+  ungroup()
+
+datMeas5AvgHist = datMeas5Avg %>%
+  filter(Scenario == 'Historical', Strategy == 'Baseline') %>%
+  dplyr::select(-Scenario, -Period)
+
+datMeas5AvgFut = datMeas5Avg %>%
+  mutate(ValueHist = datMeas5AvgHist$Value) %>%
+  mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
+
+datMeas5AvgFut$Measure = 'Days above 5,498 ft.'
+datMeas5AvgFut = datMeas5AvgFut %>% mutate(ValueColScle = ValueChange)
+
+datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut,
+  datMeas4AvgFut, datMeas5AvgFut)
 
 datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
   levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
@@ -167,7 +237,7 @@ datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
   levels = unique(StgyTbl$StrategyLab))
 
 datMeasPlot$Measure = factor(datMeasPlot$Measure ,
-  levels = MeasTbl$Measure)
+  levels = unique(datMeasPlot$Measure))
 
 # Plot defs
 pctLow = 5
@@ -211,5 +281,5 @@ datMeasPlotFl = datMeasPlot %>%
     ) +
       coord_equal()
 
-ggsave(paste0(dirOup, 'FlushingFlowsGrid.png'), height = 10, width = 8)
-write.csv(datMeasPlot, paste0(dirOup, 'FlushingFlowsGrid.csv'), row.names = F, quote = F)
+ggsave(paste0(dirOup, 'BeaverheadISFGrid.png'), height = 10, width = 8)
+write.csv(datMeasPlot, paste0(dirOup, 'BeaverheadISFGrid.csv'), row.names = F, quote = F)
