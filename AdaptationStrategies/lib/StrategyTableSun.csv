@@ -1,9 +1,9 @@
 Directory,Strategy,StrategyLab,ScenarioSet
 "CC All,GeneralMRM,Baseline",Baseline,Baseline,CC
-"CC All,GeneralMRM,SunIncWCFC175cfs",IncWCFC175cfs,Inc Willow Cr Feeder Canal Cap,CC
-"CC All,GeneralMRM,SunPishkunAdd30kAcFt",Add30kAcFt,GID New Res,CC
-"CC All,GeneralMRM,SunPishkunAdd30kAcFtIncPSCCap",Add30kAcFtIncPSCCap,GID New Res and Inc Pishkun Supply Canal Cap,CC
+"CC All,GeneralMRM,SunIncWCFC175cfs",IncWCFC175cfs,Inc. Willow Creek Feeder Canal Cap.,CC
+"CC All,GeneralMRM,SunPishkunAdd30kAcFt",Add30kAcFt,GID New Res.,CC
+"CC All,GeneralMRM,SunPishkunAdd30kAcFtIncPSCCap",Add30kAcFtIncPSCCap,GID New Res. and Inc. Pishkun Supply Canal Cap.,CC
 "PaleoEvent,GeneralMRM,Baseline",Baseline,Baseline,PaleoEvent
-"PaleoEvent,GeneralMRM,SunIncWCFC175cfs",IncWCFC175cfs,Inc Willow Cr Feeder Canal Cap,PaleoEvent
-"PaleoEvent,GeneralMRM,SunPishkunAdd30kAcFt",Add30kAcFt,GID New Res,PaleoEvent
-"PaleoEvent,GeneralMRM,SunPishkunAdd30kAcFtIncPSCCap",Add30kAcFtIncPSCCap,GID New Res and Inc Pishkun Supply Canal Cap,PaleoEvent
+"PaleoEvent,GeneralMRM,SunIncWCFC175cfs",IncWCFC175cfs,Inc. Willow Creek Feeder Canal Cap.,PaleoEvent
+"PaleoEvent,GeneralMRM,SunPishkunAdd30kAcFt",Add30kAcFt,GID New Res.,PaleoEvent
+"PaleoEvent,GeneralMRM,SunPishkunAdd30kAcFtIncPSCCap",Add30kAcFtIncPSCCap,GID New Res. and Inc. Pishkun Supply Canal Cap.,PaleoEvent

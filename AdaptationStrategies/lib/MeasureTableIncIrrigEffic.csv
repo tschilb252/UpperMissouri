@@ -16,19 +16,19 @@ Gallatin Irrigators Shortage,DepletionShortage.rdf,Water_Users_Hyalite Creek RS 
 Gallatin Irrigators Shortage,DepletionShortage.rdf,Water Users Other Tribs above Axtell Bridge.Depletion Shortage
 Gallatin Irrigators Shortage,DepletionShortage.rdf,Water Users Tribs above I_90 Bridge.Depletion Shortage
 Gallatin Irrigators Shortage,DepletionShortage.rdf,Water Users West Gallatin Canal ab Cottonwood.Depletion Shortage
-Beaverhead Irrigators Shortage,Allocations.rdf,Clark Canyon Res Data.Company Annual Allocation Fraction
-Beaverhead Irrigators Shortage,Allocations.rdf,Clark Canyon Res Data.District Annual Allocation Fraction
-Beaverhead Irrigators Shortage,Allocations.rdf,Clark Canyon Res Data.Senior Annual Allocation Fraction
-Beaverhead Irrigators Shortage 2,DepletionShortage.rdf,Blacktail and Other Tribs SW and GW.Depletion Shortage
-Beaverhead Irrigators Shortage 2,DepletionShortage.rdf,Blacktail and Other Tribs SW Only.Depletion Shortage
-Beaverhead Irrigators Shortage 2,DepletionShortage.rdf,Grasshopper Irrigation.Depletion Shortage
-Beaverhead Irrigators Shortage 2,DepletionShortage.rdf,Horse Prairie Irrigation.Depletion Shortage
-Beaverhead Irrigators Shortage 2,DepletionShortage.rdf,Irrigation above RRLR.Depletion Shortage
-Beaverhead Irrigators Shortage 2,DepletionShortage.rdf,Lower Red Rock Irrigation Access to Storage.Depletion Shortage
-Beaverhead Irrigators Shortage 2,DepletionShortage.rdf,Lower Red Rock Irrigation no Access to Storage.Depletion Shortage
-Beaverhead Irrigators Shortage 2,DepletionShortage.rdf,Outlaw.Depletion Shortage
-Beaverhead Irrigators Shortage 2,DepletionShortage.rdf,RRR Tributary Irrigation.Depletion Shortage
-Beaverhead Irrigators Shortage 2,DepletionShortage.rdf,Tributary Irrigation above Lima.Depletion Shortage
+Clark Canyon Irrigators Shortage,Allocations.rdf,Clark Canyon Res Data.Company Annual Allocation Fraction
+Clark Canyon Irrigators Shortage,Allocations.rdf,Clark Canyon Res Data.District Annual Allocation Fraction
+Clark Canyon Irrigators Shortage,Allocations.rdf,Clark Canyon Res Data.Senior Annual Allocation Fraction
+Beaverhead Irrigators Shortage,DepletionShortage.rdf,Blacktail and Other Tribs SW and GW.Depletion Shortage
+Beaverhead Irrigators Shortage,DepletionShortage.rdf,Blacktail and Other Tribs SW Only.Depletion Shortage
+Beaverhead Irrigators Shortage,DepletionShortage.rdf,Grasshopper Irrigation.Depletion Shortage
+Beaverhead Irrigators Shortage,DepletionShortage.rdf,Horse Prairie Irrigation.Depletion Shortage
+Beaverhead Irrigators Shortage,DepletionShortage.rdf,Irrigation above RRLR.Depletion Shortage
+Beaverhead Irrigators Shortage,DepletionShortage.rdf,Lower Red Rock Irrigation Access to Storage.Depletion Shortage
+Beaverhead Irrigators Shortage,DepletionShortage.rdf,Lower Red Rock Irrigation no Access to Storage.Depletion Shortage
+Beaverhead Irrigators Shortage,DepletionShortage.rdf,Outlaw.Depletion Shortage
+Beaverhead Irrigators Shortage,DepletionShortage.rdf,RRR Tributary Irrigation.Depletion Shortage
+Beaverhead Irrigators Shortage,DepletionShortage.rdf,Tributary Irrigation above Lima.Depletion Shortage
 Big Hole Irrigators Shortage,DepletionShortage.rdf,Water Users Big Hole_Glen to Mouth.Depletion Shortage
 Big Hole Irrigators Shortage,DepletionShortage.rdf,Water Users Big Hole_Headwaters.Depletion Shortage
 Big Hole Irrigators Shortage,DepletionShortage.rdf,Water Users Big Hole_Melrose to Glen.Depletion Shortage
@@ -133,3 +133,12 @@ Big Hole River at Melrose August Flow,GageFlow.rdf,06025500 Big Hole nr Melrose.
 Missouri River at Toston August Flow,GageFlow.rdf,06054500 Missouri at Toston.Gage Inflow
 Sun River at Simms August Flow,GageFlow.rdf,06085800 Sun at Simms.Gage Inflow
 Musselshell River at Roundup August Flow,GageFlow.rdf,6126500 Musselshell nr Roundup.Gage Inflow
+Canyon Ferry Hydropower Production,Energy.rdf,Canyon Ferry.Energy
+Northwestern Energy Hydropower Production,Energy.rdf,Black Eagle.Energy
+Northwestern Energy Hydropower Production,Energy.rdf,Cochrane.Energy
+Northwestern Energy Hydropower Production,Energy.rdf,Hauser Power.Energy
+Northwestern Energy Hydropower Production,Energy.rdf,Holter.Energy
+Northwestern Energy Hydropower Production,Energy.rdf,Morony.Energy
+Northwestern Energy Hydropower Production,Energy.rdf,Rainbow.Energy
+Northwestern Energy Hydropower Production,Energy.rdf,Ryan.Energy
+Toston Hydropower Production,Energy.rdf,Toston Data.Toston Power
