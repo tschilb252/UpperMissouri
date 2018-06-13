@@ -106,9 +106,7 @@ tmpPlotVert = ggplot(data = tmpData, aes(x = Measure, y = Scenario,
     coord_equal()
 
 tmpLegendVert = g_legend(tmpPlotVert)
-plot(tmpLegendVert)
 ggsave(plot = tmpLegendVert, paste0(dirOup, 'SummaryLegendVertical.png'), height = 6, width = 1)
 
 tmpLegendHorz = g_legend(tmpPlotHorz)
-plot(tmpLegendHorz)
 ggsave(plot = tmpLegendHorz, paste0(dirOup, 'SummaryLegendHorizontal.png'), height = 1, width = 6)
