@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Marias River Basin
-#' Last Modified June 11 2018
+#' Last Modified June 12 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -303,5 +303,5 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'MariasISFGrid.png'), height = 10, width = 8)
-write.csv(datMeasPlot, paste0(dirOup, 'MariasISFGrid.csv'), row.names = F, quote = F)
+ggsave(paste0(dirOup, 'MariasGrid.png'), height = 10, width = 8)
+write.csv(datMeasPlot, paste0(dirOup, 'MariasGrid.csv'), row.names = F, quote = F)

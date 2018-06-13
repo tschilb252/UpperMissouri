@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Increased Irrigation Efficiency Strategy
-#' Last Modified June 11 2018
+#' Last Modified June 12 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -288,6 +288,6 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'IncIrrigEfficISFGrid.png'), height = 10, width = 8)
-write.csv(datMeasPlot, paste0(dirOup, 'IncIrrigEfficISFGrid.csv'),
+ggsave(paste0(dirOup, 'IncIrrigEfficGrid.png'), height = 10, width = 8)
+write.csv(datMeasPlot, paste0(dirOup, 'IncIrrigEfficGrid.csv'),
   row.names = F, quote = F)

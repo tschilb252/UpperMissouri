@@ -1,0 +1,5 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"PaleoResampled,GeneralMRM,Baseline",Baseline,Baseline,PaleoResampled
+"PaleoResampled,GeneralMRM,Beaverhead100cfsWinterMax",100cfsWinterMax,100cfs Max Winter Flow,PaleoResampled
+"PaleoResampled,GeneralMRM,Beaverhead100cfsWinterMaxIncFloodPool",IncFloodPool100cfsWintMax,100cfs Max Winter Flow and Increase Flood Pool Elev.,PaleoResampled
+"PaleoResampled,GeneralMRM,BeaverheadIncFloodPool",IncFloodPool,Increase Flood Pool Elev.,PaleoResampled

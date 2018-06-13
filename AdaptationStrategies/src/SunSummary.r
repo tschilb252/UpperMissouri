@@ -32,6 +32,7 @@ fileList = unique(MeasTbl$File)
 stgyList = unique(StgyTbl$Strategy)
 ctFiles = nrow(StgyTbl)
 
+# Shortages
 fileTmp = fileList[1]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas = data.table()
@@ -76,6 +77,7 @@ datMeasAvgFut = datMeasAvg %>%
 
 datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange * -1)
 
+# Reservoir EOWY storage
 fileTmp = fileList[2]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas2 = data.table()
@@ -115,6 +117,7 @@ datMeas2AvgFut = datMeas2Avg %>%
 
 datMeas2AvgFut = datMeas2AvgFut %>% mutate(ValueColScle = ValueChange)
 
+# In-stream Flows
 fileTmp = fileList[3]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas3 = data.table()
