@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Increased Irrigation Efficiency Strategy
-#' Last Modified June 12 2018
+#' Last Modified June 14 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -232,8 +232,53 @@ datMeas4AvgFut = datMeas4Avg %>%
 
 datMeas4AvgFut = datMeas4AvgFut %>% mutate(ValueColScle = ValueChange)
 
+# Hydropower production (Toston)
+fileTmp = fileList[5]
+slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
+datMeas5 = data.table()
+for(iterFile in 1:ctFiles){
+  filePath = paste0(dirInp, StgyTbl$Directory[iterFile], '/', fileTmp)
+  ScenarioSet = StgyTbl$ScenarioSet[iterFile]
+  Strategy =  StgyTbl$Strategy[iterFile]
+  datTmp = read.rdf(filePath)
+  datTmpDT = Rdf2dt(datTmp, slotListTmp)
+  datTmpDT$ScenarioSet = ScenarioSet
+  datTmpDT$Strategy = Strategy
+  datMeas5 = bind_rows(datMeas5, datTmpDT)
+}
+
+datMeas5 = datMeas5 %>%
+  left_join(ScenTbl) %>%
+  filter(Scenario %in% ScenList) %>%
+  mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario)) %>%
+  mutate(Value = TostonEnergy(Value))
+
+datMeas5Agg = datMeas5 %>%
+    mutate(WYear = wyear(Date)) %>%         # add water year column
+    dplyr::rename(Slot = RiverWareSlot) %>%
+    left_join(MeasTbl) %>%
+    group_by(Measure, Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
+    summarise(Value = sum(Value)) %>%
+    ungroup()
+
+datMeas5Avg = datMeas5Agg %>%
+  group_by(Measure, Scenario, Period, Strategy) %>%
+  summarise(Value = mean(Value)) %>%
+  ungroup()
+
+datMeas5AvgHist = datMeas5Avg %>%
+  filter(Scenario == 'Historical', Strategy == 'Baseline') %>%
+  rename(ValueHist = Value) %>%
+  dplyr::select(-Scenario, -Period, -Strategy)
+
+datMeas5AvgFut = datMeas5Avg %>%
+  left_join(datMeas5AvgHist) %>%
+  mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
+
+datMeas5AvgFut = datMeas5AvgFut %>% mutate(ValueColScle = ValueChange)
+
 # Combine measures and plot
-datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut, datMeas4AvgFut)
+datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut, datMeas4AvgFut, datMeas5AvgFut)
 datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
   levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
     'MID', 'LDP', 'MIP', 'LPP')))

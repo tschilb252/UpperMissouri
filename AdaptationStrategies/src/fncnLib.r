@@ -155,3 +155,41 @@ calc_hydropowersum = function(hydropower, date){
 	hydropower_sum = hydropower_dt$hydropower
 	return(hydropower_sum)
 }
+
+g_legend = function(a.gplot){
+  tmp = ggplot_gtable(ggplot_build(a.gplot))
+  leg = which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  legend = tmp$grobs[[leg]]
+  return(legend)
+}
+
+TostonEnergy = function(Flow){
+  # Calculates power production at DNRC's Broadwater
+  # facility (Toston)
+  # Power production (in MW) is related to streanflow (in cfs)
+  # Energy (in MWh) is calculated from power
+
+  # Flow 1110 to 6800 power coefficients
+  Clo1 = -0.000102927678765074
+  Clo2 = 2.23638033061626
+  Clo3 = -855.659845886428
+# Flow 6800 to 24230 power coefficients
+  Chi1 = -5.99619692894544e-06
+  Chi2 = -0.278548746085341
+  Chi3 = 11770.5396744282
+	TostonPower = function(Flow){
+	  if(Flow < 1110 | Flow >= 24230){
+	    Power = 0
+	  } else if(Flow >= 1110 & Flow < 6800){
+	    Power = Clo1*Flow^2 + Clo2*Flow + Clo3
+	  } else if(Flow >= 6800 & Flow < 24230){
+	    Power = Chi1*Flow^2 + Chi2*Flow + Chi3
+	  }
+		return(Power)
+	}
+	Power = unlist(lapply(Flow, TostonPower))
+  Energy = Power / 24
+  return(Energy)
+}
+
+unlist(lapply(1:10, TostonEnergy))
