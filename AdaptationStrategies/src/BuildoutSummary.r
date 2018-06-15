@@ -157,8 +157,53 @@ datMeas3AvgFut = datMeas3Avg %>%
 
 datMeas3AvgFut = datMeas3AvgFut %>% mutate(ValueColScle = ValueChange)
 
+# Hydropower production (Toston)
+fileTmp = fileList[4]
+slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
+datMeas4 = data.table()
+for(iterFile in 1:ctFiles){
+  filePath = paste0(dirInp, StgyTbl$Directory[iterFile], '/', fileTmp)
+  ScenarioSet = StgyTbl$ScenarioSet[iterFile]
+  Strategy =  StgyTbl$Strategy[iterFile]
+  datTmp = read.rdf(filePath)
+  datTmpDT = Rdf2dt(datTmp, slotListTmp)
+  datTmpDT$ScenarioSet = ScenarioSet
+  datTmpDT$Strategy = Strategy
+  datMeas4 = bind_rows(datMeas4, datTmpDT)
+}
+
+datMeas4 = datMeas4 %>%
+  left_join(ScenTbl) %>%
+  filter(Scenario %in% ScenList) %>%
+  mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario)) %>%
+  mutate(Value = TostonEnergy(Value))
+
+datMeas4Agg = datMeas4 %>%
+    mutate(WYear = wyear(Date)) %>%         # add water year column
+    dplyr::rename(Slot = RiverWareSlot) %>%
+    left_join(MeasTbl) %>%
+    group_by(Measure, Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
+    summarise(Value = sum(Value)) %>%
+    ungroup()
+
+datMeas4Avg = datMeas4Agg %>%
+  group_by(Measure, Scenario, Period, Strategy) %>%
+  summarise(Value = mean(Value)) %>%
+  ungroup()
+
+datMeas4AvgHist = datMeas4Avg %>%
+  filter(Scenario == 'Historical', Strategy == 'Baseline') %>%
+  rename(ValueHist = Value) %>%
+  dplyr::select(-Scenario, -Period, -Strategy)
+
+datMeas4AvgFut = datMeas4Avg %>%
+  left_join(datMeas4AvgHist) %>%
+  mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
+
+datMeas4AvgFut = datMeas4AvgFut %>% mutate(ValueColScle = ValueChange)
+
 # Combine measures and plot
-datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut)
+datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut, datMeas4AvgFut)
 
 datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
   levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
