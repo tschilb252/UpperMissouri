@@ -79,8 +79,8 @@ Plot1 = ggplot(data = datMeasPlot1) +
   # geom_ribbon(aes(x = Year, ymin = 0.5, ymax = 0.75), fill = '#FCCA8B', alpha = 0.3) +
   # geom_ribbon(aes(x = Year, ymin = 0, ymax = 0.5), fill = '#DC8C6B', alpha = 0.3) +
   geom_hline(yintercept = c(0.77, 0.5, 0.25), alpha = 0.6, linetype = 3, size = 0.2) +
-  geom_line(aes(x = Year, y = Value, colour = StrategyLab)) +
-  geom_point(aes(x = Year, y = Value, colour = StrategyLab, shape = StrategyLab)) +
+  geom_line(aes(x = Year, y = Value, colour = StrategyLab, linetype = StrategyLab), alpha = 0.8) +
+  geom_point(aes(x = Year, y = Value, colour = StrategyLab, shape = StrategyLab), size = 2, alpha = 0.8) +
   facet_wrap(~Measure, ncol = 1) +
   scale_colour_manual(values = c('black', '#25499F', '#23A491', '#7A5BA9')) +
   scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1),
@@ -100,7 +100,7 @@ Plot1 = ggplot(data = datMeasPlot1) +
     legend.title=element_blank(),
     panel.background=element_blank(),
     panel.border=element_blank(),
-    panel.grid.major=element_blank(),
+    # panel.grid.major=element_blank(),
     panel.grid.minor=element_blank(),
     plot.background=element_blank(),
     strip.background = element_blank(),
@@ -114,8 +114,8 @@ Plot2 = ggplot(data = datMeasPlot2) +
     # geom_ribbon(aes(x = Year, ymin = 0.5, ymax = 0.75), fill = '#FCCA8B', alpha = 0.3) +
     # geom_ribbon(aes(x = Year, ymin = 0, ymax = 0.5), fill = '#DC8C6B', alpha = 0.3) +
     geom_hline(yintercept = c(0.77, 0.5, 0.25), alpha = 0.6, linetype = 3, size = 0.2) +
-    geom_line(aes(x = Year, y = Value, colour = StrategyLab)) +
-    geom_point(aes(x = Year, y = Value, colour = StrategyLab, shape = StrategyLab)) +
+    geom_line(aes(x = Year, y = Value, colour = StrategyLab, linetype = StrategyLab), alpha = 0.8) +
+    geom_point(aes(x = Year, y = Value, colour = StrategyLab, shape = StrategyLab), size = 2, alpha = 0.8) +
     facet_wrap(~Measure, ncol = 1) +
     scale_colour_manual(values = c('black', '#25499F', '#23A491', '#7A5BA9')) +
     scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1),
@@ -136,7 +136,7 @@ Plot2 = ggplot(data = datMeasPlot2) +
       legend.text=element_text(size = 10),
       panel.background=element_blank(),
       panel.border=element_blank(),
-      panel.grid.major=element_blank(),
+      # panel.grid.major=element_blank(),
       panel.grid.minor=element_blank(),
       plot.background=element_blank(),
       strip.background = element_blank(),

@@ -68,7 +68,7 @@ datMeasAvgFut = datMeasAvg %>%
   mutate(ValueHist = datMeasAvgHist$Value) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeasAvgFut$Measure = 'EOWY Storage'
+datMeasAvgFut$Measure = 'Clark Canyon EOWY Storage'
 datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange)
 
 # Reservoir elevation days in flood pool
@@ -114,8 +114,8 @@ datMeas2AvgFut = datMeas2Avg %>%
   mutate(ValueHist = datMeas2AvgHist$Value) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeas2AvgFut$Measure = 'Days in Flood Pool'
-datMeas2AvgFut = datMeas2AvgFut %>% mutate(ValueColScle = ValueChange)
+datMeas2AvgFut$Measure = 'Clark Canyon Days in Flood Pool'
+datMeas2AvgFut = datMeas2AvgFut %>% mutate(ValueColScle = ValueChange * -1)
 
 # Clark Canyon users allocation fraction (shortage)
 fileTmp = fileList[3]
@@ -228,7 +228,7 @@ datMeas5AvgFut = datMeas5Avg %>%
   mutate(ValueHist = datMeas5AvgHist$Value) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeas5AvgFut$Measure = 'Days above 5,498 ft.'
+datMeas5AvgFut$Measure = 'Clark Canyon Recreation'
 datMeas5AvgFut = datMeas5AvgFut %>% mutate(ValueColScle = ValueChange)
 
 # Combine measures and plot
@@ -256,6 +256,7 @@ datMeasPlot = datMeasPlot %>%
   ifelse(ValueColScle > pctHigh, pctHigh,
     ifelse(ValueColScle < -1 * pctHigh, -1 * pctHigh, ValueColScle))))
 
+# Plot 2050s
 datMeasPlotFl = datMeasPlot %>%
   filter(Period %in% c('2050s', 'Historical') | is.na(Period))
 
@@ -289,5 +290,42 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'BeaverheadGrid.png'), height = 10, width = 8)
-write.csv(datMeasPlot, paste0(dirOup, 'BeaverheadGrid.csv'), row.names = F, quote = F)
+ggsave(paste0(dirOup, 'BeaverheadGrid2050s.png'), height = 10, width = 8)
+write.csv(datMeasPlot, paste0(dirOup, 'BeaverheadGrid2050s.csv'), row.names = F, quote = F)
+
+# Plot 2080s
+datMeasPlotFl = datMeasPlot %>%
+  filter(Period %in% c('2080s', 'Historical') | is.na(Period))
+
+ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
+  fill = ValueColScle, label = ValueTxt)) +
+  geom_tile(colour = 'white', size = 1) +
+  geom_text(size = 4, colour = 'white') +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+  xlab('') +
+  ylab('') +
+  scale_x_discrete(expand=c(0,0), position="top") +
+  scale_y_discrete(expand=c(0,0), position="right") +
+  theme(
+    axis.line.x=element_line(size=0.5, colour = 'gray60'),
+    axis.line.y=element_line(size=0.5, colour = 'gray60'),
+    axis.line=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+    axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank(),
+    strip.text.x=element_text(size = 10),
+    strip.text.y=element_text(size = 10)
+  ) +
+    coord_equal()
+
+ggsave(paste0(dirOup, 'BeaverheadGrid2080s.png'), height = 10, width = 8)
+write.csv(datMeasPlot, paste0(dirOup, 'BeaverheadGrid2080s.csv'), row.names = F, quote = F)
