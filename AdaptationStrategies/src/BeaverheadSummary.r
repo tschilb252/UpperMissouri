@@ -205,7 +205,7 @@ datMeas4AvgFut = datMeas4AvgFut %>% mutate(ValueColScle = ValueChange)
 
 # Clark Canyon boat ramp elevations (using reservoir elevation data from datMeas2)
 datMeas5 = datMeas2 # uses the same data
-ValueThresh = 5498 # Clark Canyon flood pool elev.
+ValueThresh = 5527 # Beaverhead South and Horse Prairie boat ramp elev.
 
 datMeas5Agg = datMeas5 %>%
     mutate(WYear = wyear(Date), Month = month(Date)) %>%         # add water year and month columns
