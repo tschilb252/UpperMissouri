@@ -28,8 +28,8 @@ MeasTbl = fread('lib/MeasureTableBeaverhead.csv')
 ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
   'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
 
-dateStrt = as.Date('1986-10-01')
-dateEnd = as.Date('1995-09-30')
+dateStrt = as.Date('1955-10-01')
+dateEnd = as.Date('1968-09-30')
 #################################################
 #'  Read in Data
 
@@ -86,7 +86,7 @@ datMeasAgg$StrategyLab = factor(datMeasAgg$StrategyLab,
       levels = unique(StgyTbl$StrategyLab))
 
 datMeasPlot = datMeasAgg %>%
-  filter(Trace == 139) %>%
+  filter(Trace == 139,  Date >= dateStrt, Date <= dateEnd) %>%
   mutate(Year = year(Date))
 
 datMeasPlot1 = datMeasPlot %>% filter(Measure == 'CCWSC Allocation')

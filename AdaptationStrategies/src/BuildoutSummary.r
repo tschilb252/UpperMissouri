@@ -32,6 +32,7 @@ fileList = unique(MeasTbl$File)
 stgyList = unique(StgyTbl$Strategy)
 ctFiles = nrow(StgyTbl)
 
+# In-Stream Flows
 fileTmp = fileList[1]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas = data.table()
