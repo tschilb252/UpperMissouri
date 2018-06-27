@@ -1,10 +1,10 @@
-#################################################
-#' @title Upper Missouri Basin Study - Buildout
+ height = 7.5#################################################
+#' @title Upper Missouri Basin Study - IncDevelopment
 #' Figures
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
-#' Basin Study, Buildout (Inc. Consumptive Use) Strategy
-#' Last Modified June 11 2018
+#' Basin Study, IncDevelopment (Inc. Consumptive Use) Strategy
+#' Last Modified June 26 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -21,8 +21,8 @@ dirOup = 'T:/PlanningOperations/Staff/DBROMAN/UMBIA/AdaptationStrategies/Figures
 
 # LookUp Table Locations
 ScenTbl = fread('lib/ScenarioTable.csv')
-StgyTbl = fread('lib/StrategyTableBuildout.csv')
-MeasTbl = fread('lib/MeasureTableBuildout.csv')
+StgyTbl = fread('lib/StrategyTableIncDevelopment.csv')
+MeasTbl = fread('lib/MeasureTableIncDevelopment.csv')
 
 ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
 #################################################
@@ -76,6 +76,7 @@ datMeasAvgFut = datMeasAvg %>%
 
 datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange)
 
+# Reservoir EOWY Storage
 fileTmp = fileList[2]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas2 = data.table()
@@ -115,6 +116,7 @@ datMeas2AvgFut = datMeas2Avg %>%
 
 datMeas2AvgFut = datMeas2AvgFut %>% mutate(ValueColScle = ValueChange)
 
+# Hydropower Production
 fileTmp = fileList[3]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas3 = data.table()
@@ -203,8 +205,54 @@ datMeas4AvgFut = datMeas4Avg %>%
 
 datMeas4AvgFut = datMeas4AvgFut %>% mutate(ValueColScle = ValueChange)
 
+# Recreation (Reservoir Elevation)
+fileTmp = fileList[5]
+slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
+datMeas5 = data.table()
+for(iterFile in 1:ctFiles){
+  filePath = paste0(dirInp, StgyTbl$Directory[iterFile], '/', fileTmp)
+  ScenarioSet = StgyTbl$ScenarioSet[iterFile]
+  Strategy =  StgyTbl$Strategy[iterFile]
+  datTmp = read.rdf(filePath)
+  datTmpDT = Rdf2dt(datTmp, slotListTmp)
+  datTmpDT$ScenarioSet = ScenarioSet
+  datTmpDT$Strategy = Strategy
+  datMeas5 = bind_rows(datMeas5, datTmpDT)
+}
+
+ValueThresh = 2977 # includes most Tiber boat ramps
+
+datMeas5 = datMeas5 %>%
+  left_join(ScenTbl) %>%
+  filter(Scenario %in% ScenList) %>%
+  mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
+
+datMeas5Agg = datMeas5 %>%
+    mutate(WYear = wyear(Date), Month = month(Date)) %>%         # add water year and month columns
+    filter(Month >= 4, Month <= 10, WYear >= 1951) %>%
+    mutate(ValueExc = ifelse(Value >= ValueThresh, 1, 0)) %>%
+    group_by(Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
+    summarise(Value = sum(ValueExc) / n()) %>%       # sum up shortages by above groups
+    ungroup()
+
+datMeas5Avg = datMeas5Agg %>%
+  group_by(Scenario, Period, Strategy) %>%
+  summarise(Value = mean(Value)) %>%
+  ungroup()
+
+datMeas5AvgHist = datMeas5Avg %>%
+  filter(Scenario == 'Historical', Strategy == 'Baseline') %>%
+  dplyr::select(-Scenario, -Period)
+
+datMeas5AvgFut = datMeas5Avg %>%
+  mutate(ValueHist = datMeas5AvgHist$Value) %>%
+  mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
+
+datMeas5AvgFut$Measure = 'Tiber Boat Ramp Access'
+datMeas5AvgFut = datMeas5AvgFut %>% mutate(ValueColScle = ValueChange)
+
 # Combine measures and plot
-datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut, datMeas4AvgFut)
+datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut, datMeas4AvgFut, datMeas5AvgFut)
 
 datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
   levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
@@ -261,8 +309,80 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'BuildoutGrid2050s.png'), height = 10, width = 8)
-write.csv(datMeasPlot, paste0(dirOup, 'BuildoutGrid2050s.csv'), row.names = F, quote = F)
+ggsave(paste0(dirOup, 'IncDevelopmentGrid2050s.png'), height = 7.5, width = 3)
+write.csv(datMeasPlot, paste0(dirOup, 'IncDevelopmentGrid2050s.csv'), row.names = F, quote = F)
+
+# Plot Historical
+datMeasPlotHist = datMeasPlot %>%
+  filter(Period == 'Historical')
+
+ggplot(data = datMeasPlotHist, aes(x = Measure, y = Scenario,
+  fill = ValueColScle, label = ValueTxt)) +
+  geom_tile(colour = 'white', size = 1) +
+  geom_text(size = 4, colour = 'white') +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+  xlab('') +
+  ylab('') +
+  scale_x_discrete(expand=c(0,0), position="top") +
+  scale_y_discrete(expand=c(0,0), position="right") +
+  theme(
+    axis.line.x=element_line(size=0.5, colour = 'gray60'),
+    axis.line.y=element_line(size=0.5, colour = 'gray60'),
+    axis.line=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+    axis.text.y=element_blank(),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank(),
+    strip.text.x=element_text(size = 10),
+    strip.text.y=element_text(size = 10, angle = 180)
+  ) +
+    coord_equal()
+
+ggsave(paste0(dirOup, 'IncDevelopmentGridHistorical.png'), height = 7.5, width = 3)
+
+# Plot Baseline 2050s
+datMeasPlotBase = datMeasPlot %>%
+  filter(StrategyLab == 'Baseline', Period %in% c('2050s', 'Historical') | is.na(Period))
+
+ggplot(data = datMeasPlotBase, aes(x = Measure, y = Scenario,
+  fill = ValueColScle, label = ValueTxt)) +
+  geom_tile(colour = 'white', size = 1) +
+  geom_text(size = 4, colour = 'white') +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+  xlab('') +
+  ylab('') +
+  scale_x_discrete(expand=c(0,0), position="top") +
+  scale_y_discrete(expand=c(0,0), position="right") +
+  theme(
+    axis.line.x=element_line(size=0.5, colour = 'gray60'),
+    axis.line.y=element_line(size=0.5, colour = 'gray60'),
+    axis.line=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+    axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank(),
+    strip.text.x=element_text(size = 10),
+    strip.text.y=element_blank()
+  ) +
+    coord_equal()
+
+ggsave(paste0(dirOup, 'IncDevelopmentGridBaseline2050s.png'), height = 7.5, width = 3)
 
 # Plot 2080s
 datMeasPlotFl = datMeasPlot %>%
@@ -298,5 +418,41 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'BuildoutGrid2080s.png'), height = 10, width = 8)
-write.csv(datMeasPlot, paste0(dirOup, 'BuildoutGrid2080s.csv'), row.names = F, quote = F)
+ggsave(paste0(dirOup, 'IncDevelopmentGrid2080s.png'), height = 7.5, width = 3)
+write.csv(datMeasPlot, paste0(dirOup, 'IncDevelopmentGrid2080s.csv'), row.names = F, quote = F)
+
+# Plot Baseline 2080s
+datMeasPlotBase = datMeasPlot %>%
+  filter(StrategyLab == 'Baseline', Period %in% c('2050s', 'Historical') | is.na(Period))
+
+ggplot(data = datMeasPlotBase, aes(x = Measure, y = Scenario,
+  fill = ValueColScle, label = ValueTxt)) +
+  geom_tile(colour = 'white', size = 1) +
+  geom_text(size = 4, colour = 'white') +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+  xlab('') +
+  ylab('') +
+  scale_x_discrete(expand=c(0,0), position="top") +
+  scale_y_discrete(expand=c(0,0), position="right") +
+  theme(
+    axis.line.x=element_line(size=0.5, colour = 'gray60'),
+    axis.line.y=element_line(size=0.5, colour = 'gray60'),
+    axis.line=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+    axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank(),
+    strip.text.x=element_text(size = 10),
+    strip.text.y=element_blank()
+  ) +
+    coord_equal()
+
+ggsave(paste0(dirOup, 'IncDevelopmentGridBaseline2080s.png'), height = 7.5, width = 3)

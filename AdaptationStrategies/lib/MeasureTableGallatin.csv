@@ -1,9 +1,6 @@
 ﻿Measure,File,Slot
 East Gallatin August Flow,ReachOutflow.rdf,Gallatin_E Gallatin Bridger Creek to Confluence.Outflow
 Lower Gallatin August Flow,ReachOutflow.rdf,Gallatin_Logan to Three Forks.Inflow
-City of Bozeman Deliveries,MandI.rdf,City of Bozeman.Total Diversion
-Rural Valley M&I Deliveries,Groundwater.rdf,Gallatin Rural GW Users.Total Diversion
-Rural Valley M&I Deliveries,Groundwater.rdf,New Rural Pipeline Users.Total Diversion
 Valley Irrigation Deliveries,DiversionShortage.rdf,GW Users above Logan.Diversion Shortage
 Valley Irrigation Deliveries,DiversionShortage.rdf,Water Users Baker Ditch.Diversion Shortage
 Valley Irrigation Deliveries,DiversionShortage.rdf,Water Users Farmers and W Gallatin Canal bl Hyalite Creek.Diversion Shortage
@@ -21,3 +18,4 @@ Valley Irrigation Deliveries,DiversionShortage.rdf,Water_Users_Hyalite Creek RS 
 Valley Irrigation Deliveries,DiversionShortage.rdf,Water Users Other Tribs above Axtell Bridge.Diversion Shortage
 Valley Irrigation Deliveries,DiversionShortage.rdf,Water Users Tribs above I_90 Bridge.Diversion Shortage
 Valley Irrigation Deliveries,DiversionShortage.rdf,Water Users West Gallatin Canal ab Cottonwood.Diversion Shortage
+DNRC Broadwater Hydropower Production,ResOutflow.rdf,Toston.Outflow

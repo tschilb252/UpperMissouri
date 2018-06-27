@@ -1,0 +1,337 @@
+Date,Value,Label
+1988-06-10,144,Historical Gauged Flow
+1988-06-11,105,Historical Gauged Flow
+1988-06-12,100,Historical Gauged Flow
+1988-06-13,328,Historical Gauged Flow
+1988-06-14,350,Historical Gauged Flow
+1988-06-15,206,Historical Gauged Flow
+1988-06-16,132,Historical Gauged Flow
+1988-06-17,98,Historical Gauged Flow
+1988-06-18,85,Historical Gauged Flow
+1988-06-19,75,Historical Gauged Flow
+1988-06-20,67,Historical Gauged Flow
+1988-06-21,61,Historical Gauged Flow
+1988-06-22,61,Historical Gauged Flow
+1988-06-23,67,Historical Gauged Flow
+1988-06-24,57,Historical Gauged Flow
+1988-06-25,49,Historical Gauged Flow
+1988-06-26,43,Historical Gauged Flow
+1988-06-27,54,Historical Gauged Flow
+1988-06-28,67,Historical Gauged Flow
+1988-06-29,61,Historical Gauged Flow
+1988-06-30,49,Historical Gauged Flow
+1988-07-01,41,Historical Gauged Flow
+1988-07-02,35,Historical Gauged Flow
+1988-07-03,29,Historical Gauged Flow
+1988-07-04,26,Historical Gauged Flow
+1988-07-05,25,Historical Gauged Flow
+1988-07-06,30,Historical Gauged Flow
+1988-07-07,36,Historical Gauged Flow
+1988-07-08,37,Historical Gauged Flow
+1988-07-09,38,Historical Gauged Flow
+1988-07-10,33,Historical Gauged Flow
+1988-07-11,31,Historical Gauged Flow
+1988-07-12,26,Historical Gauged Flow
+1988-07-13,25,Historical Gauged Flow
+1988-07-14,24,Historical Gauged Flow
+1988-07-15,22,Historical Gauged Flow
+1988-07-16,25,Historical Gauged Flow
+1988-07-17,26,Historical Gauged Flow
+1988-07-18,23,Historical Gauged Flow
+1988-07-19,21,Historical Gauged Flow
+1988-07-20,20,Historical Gauged Flow
+1988-07-21,19,Historical Gauged Flow
+1988-07-22,17,Historical Gauged Flow
+1988-07-23,15,Historical Gauged Flow
+1988-07-24,10,Historical Gauged Flow
+1988-07-25,6.6,Historical Gauged Flow
+1988-07-26,5.3,Historical Gauged Flow
+1988-07-27,4.2,Historical Gauged Flow
+1988-07-28,3.4,Historical Gauged Flow
+1988-07-29,3.1,Historical Gauged Flow
+1988-07-30,2.9,Historical Gauged Flow
+1988-07-31,2.5,Historical Gauged Flow
+1988-08-01,1.9,Historical Gauged Flow
+1988-08-02,1.4,Historical Gauged Flow
+1988-08-03,1.4,Historical Gauged Flow
+1988-08-04,1.6,Historical Gauged Flow
+1988-08-05,1.7,Historical Gauged Flow
+1988-08-06,2.2,Historical Gauged Flow
+1988-08-07,2.9,Historical Gauged Flow
+1988-08-08,2.2,Historical Gauged Flow
+1988-08-09,2,Historical Gauged Flow
+1988-08-10,1.9,Historical Gauged Flow
+1988-08-11,1.4,Historical Gauged Flow
+1988-08-12,1.3,Historical Gauged Flow
+1988-08-13,1.7,Historical Gauged Flow
+1988-08-14,1.9,Historical Gauged Flow
+1988-08-15,1.7,Historical Gauged Flow
+1988-08-16,1.4,Historical Gauged Flow
+1988-08-17,1.6,Historical Gauged Flow
+1988-08-18,1.2,Historical Gauged Flow
+1988-08-19,0.8,Historical Gauged Flow
+1988-08-20,0.41,Historical Gauged Flow
+1988-08-21,0.52,Historical Gauged Flow
+1988-08-22,0.36,Historical Gauged Flow
+1988-08-23,0.28,Historical Gauged Flow
+1988-08-24,0.2,Historical Gauged Flow
+1988-08-25,0.18,Historical Gauged Flow
+1988-08-26,0.33,Historical Gauged Flow
+1988-08-27,0.08,Historical Gauged Flow
+1988-08-28,0,Historical Gauged Flow
+1988-08-29,0,Historical Gauged Flow
+1988-08-30,0,Historical Gauged Flow
+1988-08-31,0,Historical Gauged Flow
+1988-09-01,0,Historical Gauged Flow
+1988-06-10,160,Modeled Flow: 160/20 CFS Target
+1988-06-11,171.34,Modeled Flow: 160/20 CFS Target
+1988-06-12,160,Modeled Flow: 160/20 CFS Target
+1988-06-13,160,Modeled Flow: 160/20 CFS Target
+1988-06-14,160,Modeled Flow: 160/20 CFS Target
+1988-06-15,160,Modeled Flow: 160/20 CFS Target
+1988-06-16,160,Modeled Flow: 160/20 CFS Target
+1988-06-17,160,Modeled Flow: 160/20 CFS Target
+1988-06-18,160,Modeled Flow: 160/20 CFS Target
+1988-06-19,160,Modeled Flow: 160/20 CFS Target
+1988-06-20,160,Modeled Flow: 160/20 CFS Target
+1988-06-21,160,Modeled Flow: 160/20 CFS Target
+1988-06-22,160,Modeled Flow: 160/20 CFS Target
+1988-06-23,160,Modeled Flow: 160/20 CFS Target
+1988-06-24,160,Modeled Flow: 160/20 CFS Target
+1988-06-25,160,Modeled Flow: 160/20 CFS Target
+1988-06-26,160,Modeled Flow: 160/20 CFS Target
+1988-06-27,160,Modeled Flow: 160/20 CFS Target
+1988-06-28,160,Modeled Flow: 160/20 CFS Target
+1988-06-29,160,Modeled Flow: 160/20 CFS Target
+1988-06-30,160,Modeled Flow: 160/20 CFS Target
+1988-07-01,20,Modeled Flow: 160/20 CFS Target
+1988-07-02,20,Modeled Flow: 160/20 CFS Target
+1988-07-03,20,Modeled Flow: 160/20 CFS Target
+1988-07-04,20,Modeled Flow: 160/20 CFS Target
+1988-07-05,20,Modeled Flow: 160/20 CFS Target
+1988-07-06,20,Modeled Flow: 160/20 CFS Target
+1988-07-07,20,Modeled Flow: 160/20 CFS Target
+1988-07-08,20,Modeled Flow: 160/20 CFS Target
+1988-07-09,20,Modeled Flow: 160/20 CFS Target
+1988-07-10,20,Modeled Flow: 160/20 CFS Target
+1988-07-11,20,Modeled Flow: 160/20 CFS Target
+1988-07-12,20,Modeled Flow: 160/20 CFS Target
+1988-07-13,20,Modeled Flow: 160/20 CFS Target
+1988-07-14,20,Modeled Flow: 160/20 CFS Target
+1988-07-15,20,Modeled Flow: 160/20 CFS Target
+1988-07-16,20,Modeled Flow: 160/20 CFS Target
+1988-07-17,20,Modeled Flow: 160/20 CFS Target
+1988-07-18,20,Modeled Flow: 160/20 CFS Target
+1988-07-19,20,Modeled Flow: 160/20 CFS Target
+1988-07-20,20,Modeled Flow: 160/20 CFS Target
+1988-07-21,20,Modeled Flow: 160/20 CFS Target
+1988-07-22,20,Modeled Flow: 160/20 CFS Target
+1988-07-23,20,Modeled Flow: 160/20 CFS Target
+1988-07-24,20,Modeled Flow: 160/20 CFS Target
+1988-07-25,20,Modeled Flow: 160/20 CFS Target
+1988-07-26,20,Modeled Flow: 160/20 CFS Target
+1988-07-27,20,Modeled Flow: 160/20 CFS Target
+1988-07-28,20,Modeled Flow: 160/20 CFS Target
+1988-07-29,20,Modeled Flow: 160/20 CFS Target
+1988-07-30,20,Modeled Flow: 160/20 CFS Target
+1988-07-31,20,Modeled Flow: 160/20 CFS Target
+1988-08-01,20,Modeled Flow: 160/20 CFS Target
+1988-08-02,20,Modeled Flow: 160/20 CFS Target
+1988-08-03,20,Modeled Flow: 160/20 CFS Target
+1988-08-04,20,Modeled Flow: 160/20 CFS Target
+1988-08-05,20,Modeled Flow: 160/20 CFS Target
+1988-08-06,20,Modeled Flow: 160/20 CFS Target
+1988-08-07,20,Modeled Flow: 160/20 CFS Target
+1988-08-08,20,Modeled Flow: 160/20 CFS Target
+1988-08-09,20,Modeled Flow: 160/20 CFS Target
+1988-08-10,20,Modeled Flow: 160/20 CFS Target
+1988-08-11,20,Modeled Flow: 160/20 CFS Target
+1988-08-12,20,Modeled Flow: 160/20 CFS Target
+1988-08-13,20,Modeled Flow: 160/20 CFS Target
+1988-08-14,20,Modeled Flow: 160/20 CFS Target
+1988-08-15,20,Modeled Flow: 160/20 CFS Target
+1988-08-16,20,Modeled Flow: 160/20 CFS Target
+1988-08-17,20,Modeled Flow: 160/20 CFS Target
+1988-08-18,20,Modeled Flow: 160/20 CFS Target
+1988-08-19,20,Modeled Flow: 160/20 CFS Target
+1988-08-20,20,Modeled Flow: 160/20 CFS Target
+1988-08-21,20,Modeled Flow: 160/20 CFS Target
+1988-08-22,20,Modeled Flow: 160/20 CFS Target
+1988-08-23,20,Modeled Flow: 160/20 CFS Target
+1988-08-24,20,Modeled Flow: 160/20 CFS Target
+1988-08-25,20,Modeled Flow: 160/20 CFS Target
+1988-08-26,43.72,Modeled Flow: 160/20 CFS Target
+1988-08-27,71.24,Modeled Flow: 160/20 CFS Target
+1988-08-28,101.83,Modeled Flow: 160/20 CFS Target
+1988-08-29,126.65,Modeled Flow: 160/20 CFS Target
+1988-08-30,154.41,Modeled Flow: 160/20 CFS Target
+1988-08-31,202.52,Modeled Flow: 160/20 CFS Target
+1988-09-01,187.61,Modeled Flow: 160/20 CFS Target
+1988-06-10,160,Modeled Flow: 160/40 CFS Target
+1988-06-11,171.34,Modeled Flow: 160/40 CFS Target
+1988-06-12,160,Modeled Flow: 160/40 CFS Target
+1988-06-13,160,Modeled Flow: 160/40 CFS Target
+1988-06-14,160,Modeled Flow: 160/40 CFS Target
+1988-06-15,160,Modeled Flow: 160/40 CFS Target
+1988-06-16,160,Modeled Flow: 160/40 CFS Target
+1988-06-17,160,Modeled Flow: 160/40 CFS Target
+1988-06-18,160,Modeled Flow: 160/40 CFS Target
+1988-06-19,160,Modeled Flow: 160/40 CFS Target
+1988-06-20,160,Modeled Flow: 160/40 CFS Target
+1988-06-21,160,Modeled Flow: 160/40 CFS Target
+1988-06-22,160,Modeled Flow: 160/40 CFS Target
+1988-06-23,160,Modeled Flow: 160/40 CFS Target
+1988-06-24,160,Modeled Flow: 160/40 CFS Target
+1988-06-25,160,Modeled Flow: 160/40 CFS Target
+1988-06-26,160,Modeled Flow: 160/40 CFS Target
+1988-06-27,160,Modeled Flow: 160/40 CFS Target
+1988-06-28,160,Modeled Flow: 160/40 CFS Target
+1988-06-29,160,Modeled Flow: 160/40 CFS Target
+1988-06-30,160,Modeled Flow: 160/40 CFS Target
+1988-07-01,40,Modeled Flow: 160/40 CFS Target
+1988-07-02,40,Modeled Flow: 160/40 CFS Target
+1988-07-03,40,Modeled Flow: 160/40 CFS Target
+1988-07-04,40,Modeled Flow: 160/40 CFS Target
+1988-07-05,40,Modeled Flow: 160/40 CFS Target
+1988-07-06,40,Modeled Flow: 160/40 CFS Target
+1988-07-07,40,Modeled Flow: 160/40 CFS Target
+1988-07-08,40,Modeled Flow: 160/40 CFS Target
+1988-07-09,40,Modeled Flow: 160/40 CFS Target
+1988-07-10,40,Modeled Flow: 160/40 CFS Target
+1988-07-11,40,Modeled Flow: 160/40 CFS Target
+1988-07-12,40,Modeled Flow: 160/40 CFS Target
+1988-07-13,40,Modeled Flow: 160/40 CFS Target
+1988-07-14,40,Modeled Flow: 160/40 CFS Target
+1988-07-15,40,Modeled Flow: 160/40 CFS Target
+1988-07-16,40,Modeled Flow: 160/40 CFS Target
+1988-07-17,40,Modeled Flow: 160/40 CFS Target
+1988-07-18,40,Modeled Flow: 160/40 CFS Target
+1988-07-19,40,Modeled Flow: 160/40 CFS Target
+1988-07-20,40,Modeled Flow: 160/40 CFS Target
+1988-07-21,40,Modeled Flow: 160/40 CFS Target
+1988-07-22,40,Modeled Flow: 160/40 CFS Target
+1988-07-23,40,Modeled Flow: 160/40 CFS Target
+1988-07-24,40,Modeled Flow: 160/40 CFS Target
+1988-07-25,40,Modeled Flow: 160/40 CFS Target
+1988-07-26,40,Modeled Flow: 160/40 CFS Target
+1988-07-27,40,Modeled Flow: 160/40 CFS Target
+1988-07-28,40,Modeled Flow: 160/40 CFS Target
+1988-07-29,40,Modeled Flow: 160/40 CFS Target
+1988-07-30,40,Modeled Flow: 160/40 CFS Target
+1988-07-31,40,Modeled Flow: 160/40 CFS Target
+1988-08-01,40,Modeled Flow: 160/40 CFS Target
+1988-08-02,40,Modeled Flow: 160/40 CFS Target
+1988-08-03,40,Modeled Flow: 160/40 CFS Target
+1988-08-04,40,Modeled Flow: 160/40 CFS Target
+1988-08-05,40,Modeled Flow: 160/40 CFS Target
+1988-08-06,40,Modeled Flow: 160/40 CFS Target
+1988-08-07,40,Modeled Flow: 160/40 CFS Target
+1988-08-08,40,Modeled Flow: 160/40 CFS Target
+1988-08-09,40,Modeled Flow: 160/40 CFS Target
+1988-08-10,40,Modeled Flow: 160/40 CFS Target
+1988-08-11,40,Modeled Flow: 160/40 CFS Target
+1988-08-12,40,Modeled Flow: 160/40 CFS Target
+1988-08-13,40,Modeled Flow: 160/40 CFS Target
+1988-08-14,40,Modeled Flow: 160/40 CFS Target
+1988-08-15,40,Modeled Flow: 160/40 CFS Target
+1988-08-16,40,Modeled Flow: 160/40 CFS Target
+1988-08-17,40,Modeled Flow: 160/40 CFS Target
+1988-08-18,40,Modeled Flow: 160/40 CFS Target
+1988-08-19,40,Modeled Flow: 160/40 CFS Target
+1988-08-20,40,Modeled Flow: 160/40 CFS Target
+1988-08-21,40,Modeled Flow: 160/40 CFS Target
+1988-08-22,40,Modeled Flow: 160/40 CFS Target
+1988-08-23,40,Modeled Flow: 160/40 CFS Target
+1988-08-24,40,Modeled Flow: 160/40 CFS Target
+1988-08-25,40,Modeled Flow: 160/40 CFS Target
+1988-08-26,43.72,Modeled Flow: 160/40 CFS Target
+1988-08-27,71.24,Modeled Flow: 160/40 CFS Target
+1988-08-28,101.83,Modeled Flow: 160/40 CFS Target
+1988-08-29,126.65,Modeled Flow: 160/40 CFS Target
+1988-08-30,154.41,Modeled Flow: 160/40 CFS Target
+1988-08-31,202.52,Modeled Flow: 160/40 CFS Target
+1988-09-01,187.61,Modeled Flow: 160/40 CFS Target
+1988-06-10,160,Modeled Flow: 160/60 CFS Target
+1988-06-11,171.34,Modeled Flow: 160/60 CFS Target
+1988-06-12,160,Modeled Flow: 160/60 CFS Target
+1988-06-13,160,Modeled Flow: 160/60 CFS Target
+1988-06-14,160,Modeled Flow: 160/60 CFS Target
+1988-06-15,160,Modeled Flow: 160/60 CFS Target
+1988-06-16,160,Modeled Flow: 160/60 CFS Target
+1988-06-17,160,Modeled Flow: 160/60 CFS Target
+1988-06-18,160,Modeled Flow: 160/60 CFS Target
+1988-06-19,160,Modeled Flow: 160/60 CFS Target
+1988-06-20,160,Modeled Flow: 160/60 CFS Target
+1988-06-21,160,Modeled Flow: 160/60 CFS Target
+1988-06-22,160,Modeled Flow: 160/60 CFS Target
+1988-06-23,160,Modeled Flow: 160/60 CFS Target
+1988-06-24,160,Modeled Flow: 160/60 CFS Target
+1988-06-25,160,Modeled Flow: 160/60 CFS Target
+1988-06-26,160,Modeled Flow: 160/60 CFS Target
+1988-06-27,160,Modeled Flow: 160/60 CFS Target
+1988-06-28,160,Modeled Flow: 160/60 CFS Target
+1988-06-29,160,Modeled Flow: 160/60 CFS Target
+1988-06-30,160,Modeled Flow: 160/60 CFS Target
+1988-07-01,60,Modeled Flow: 160/60 CFS Target
+1988-07-02,60,Modeled Flow: 160/60 CFS Target
+1988-07-03,60,Modeled Flow: 160/60 CFS Target
+1988-07-04,60,Modeled Flow: 160/60 CFS Target
+1988-07-05,60,Modeled Flow: 160/60 CFS Target
+1988-07-06,60,Modeled Flow: 160/60 CFS Target
+1988-07-07,60,Modeled Flow: 160/60 CFS Target
+1988-07-08,60,Modeled Flow: 160/60 CFS Target
+1988-07-09,60,Modeled Flow: 160/60 CFS Target
+1988-07-10,60,Modeled Flow: 160/60 CFS Target
+1988-07-11,60,Modeled Flow: 160/60 CFS Target
+1988-07-12,60,Modeled Flow: 160/60 CFS Target
+1988-07-13,60,Modeled Flow: 160/60 CFS Target
+1988-07-14,60,Modeled Flow: 160/60 CFS Target
+1988-07-15,60,Modeled Flow: 160/60 CFS Target
+1988-07-16,60,Modeled Flow: 160/60 CFS Target
+1988-07-17,60,Modeled Flow: 160/60 CFS Target
+1988-07-18,60,Modeled Flow: 160/60 CFS Target
+1988-07-19,60,Modeled Flow: 160/60 CFS Target
+1988-07-20,60,Modeled Flow: 160/60 CFS Target
+1988-07-21,60,Modeled Flow: 160/60 CFS Target
+1988-07-22,60,Modeled Flow: 160/60 CFS Target
+1988-07-23,60,Modeled Flow: 160/60 CFS Target
+1988-07-24,60,Modeled Flow: 160/60 CFS Target
+1988-07-25,60,Modeled Flow: 160/60 CFS Target
+1988-07-26,60,Modeled Flow: 160/60 CFS Target
+1988-07-27,60,Modeled Flow: 160/60 CFS Target
+1988-07-28,60,Modeled Flow: 160/60 CFS Target
+1988-07-29,60,Modeled Flow: 160/60 CFS Target
+1988-07-30,60,Modeled Flow: 160/60 CFS Target
+1988-07-31,60,Modeled Flow: 160/60 CFS Target
+1988-08-01,60,Modeled Flow: 160/60 CFS Target
+1988-08-02,60,Modeled Flow: 160/60 CFS Target
+1988-08-03,60,Modeled Flow: 160/60 CFS Target
+1988-08-04,60,Modeled Flow: 160/60 CFS Target
+1988-08-05,60,Modeled Flow: 160/60 CFS Target
+1988-08-06,60,Modeled Flow: 160/60 CFS Target
+1988-08-07,60,Modeled Flow: 160/60 CFS Target
+1988-08-08,60,Modeled Flow: 160/60 CFS Target
+1988-08-09,60,Modeled Flow: 160/60 CFS Target
+1988-08-10,60,Modeled Flow: 160/60 CFS Target
+1988-08-11,60,Modeled Flow: 160/60 CFS Target
+1988-08-12,60,Modeled Flow: 160/60 CFS Target
+1988-08-13,60,Modeled Flow: 160/60 CFS Target
+1988-08-14,60,Modeled Flow: 160/60 CFS Target
+1988-08-15,60,Modeled Flow: 160/60 CFS Target
+1988-08-16,60,Modeled Flow: 160/60 CFS Target
+1988-08-17,60,Modeled Flow: 160/60 CFS Target
+1988-08-18,60,Modeled Flow: 160/60 CFS Target
+1988-08-19,60,Modeled Flow: 160/60 CFS Target
+1988-08-20,60,Modeled Flow: 160/60 CFS Target
+1988-08-21,60,Modeled Flow: 160/60 CFS Target
+1988-08-22,60,Modeled Flow: 160/60 CFS Target
+1988-08-23,60,Modeled Flow: 160/60 CFS Target
+1988-08-24,60,Modeled Flow: 160/60 CFS Target
+1988-08-25,60,Modeled Flow: 160/60 CFS Target
+1988-08-26,60,Modeled Flow: 160/60 CFS Target
+1988-08-27,71.24,Modeled Flow: 160/60 CFS Target
+1988-08-28,101.83,Modeled Flow: 160/60 CFS Target
+1988-08-29,126.65,Modeled Flow: 160/60 CFS Target
+1988-08-30,154.41,Modeled Flow: 160/60 CFS Target
+1988-08-31,202.52,Modeled Flow: 160/60 CFS Target
+1988-09-01,187.61,Modeled Flow: 160/60 CFS Target

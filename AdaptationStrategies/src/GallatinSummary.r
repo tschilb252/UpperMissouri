@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Gallatin River Basin
-#' Last Modified June 12 2018
+#' Last Modified June 25 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -33,6 +33,7 @@ fileList = unique(MeasTbl$File)
 stgyList = unique(StgyTbl$Strategy)
 ctFiles = nrow(StgyTbl)
 
+# In-Stream Flows
 fileTmp = fileList[1]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas = data.table()
@@ -76,6 +77,7 @@ datMeasAvgFut = datMeasAvg %>%
 
 datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange)
 
+# Irrigation Shortage
 fileTmp = fileList[2]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas2 = data.table()
@@ -115,20 +117,19 @@ datMeas2AvgFut = datMeas2Avg %>%
   mutate(ValueHist = datMeas2AvgHist$Value) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeas2AvgFut$Measure = 'Bozeman M&I Use'
-datMeas2AvgFut = datMeas2AvgFut %>% mutate(ValueColScle = ValueChange)
+datMeas2AvgFut$Measure = 'Irrigation Shortage'
+datMeas2AvgFut = datMeas2AvgFut %>% mutate(ValueColScle = ValueChange * -1)
 
+# Hydropower production (Toston)
 fileTmp = fileList[3]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
-
 datMeas3 = data.table()
 for(iterFile in 1:ctFiles){
   filePath = paste0(dirInp, StgyTbl$Directory[iterFile], '/', fileTmp)
   ScenarioSet = StgyTbl$ScenarioSet[iterFile]
   Strategy =  StgyTbl$Strategy[iterFile]
   datTmp = read.rdf(filePath)
-  slotListTmp2 = slotListTmp[1]
-  datTmpDT = Rdf2dt(datTmp, slotListTmp2)
+  datTmpDT = Rdf2dt(datTmp, slotListTmp)
   datTmpDT$ScenarioSet = ScenarioSet
   datTmpDT$Strategy = Strategy
   datMeas3 = bind_rows(datMeas3, datTmpDT)
@@ -137,10 +138,10 @@ for(iterFile in 1:ctFiles){
 datMeas3 = datMeas3 %>%
   left_join(ScenTbl) %>%
   filter(Scenario %in% ScenList) %>%
-  mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
+  mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario)) %>%
+  mutate(Value = TostonEnergy(Value))
 
 datMeas3Agg = datMeas3 %>%
-    mutate(Value = Value * 1.98347) %>%     # convert cfs to ac-ft
     mutate(WYear = wyear(Date)) %>%         # add water year column
     dplyr::rename(Slot = RiverWareSlot) %>%
     left_join(MeasTbl) %>%
@@ -155,62 +156,20 @@ datMeas3Avg = datMeas3Agg %>%
 
 datMeas3AvgHist = datMeas3Avg %>%
   filter(Scenario == 'Historical', Strategy == 'Baseline') %>%
-  dplyr::select(-Scenario, -Period)
+  rename(ValueHist = Value) %>%
+  dplyr::select(-Scenario, -Period, -Strategy)
 
 datMeas3AvgFut = datMeas3Avg %>%
-  mutate(ValueHist = datMeas3AvgHist$Value) %>%
+  left_join(datMeas3AvgHist) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
 datMeas3AvgFut = datMeas3AvgFut %>% mutate(ValueColScle = ValueChange)
 
-fileTmp = fileList[4]
-slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
-datMeas4 = data.table()
-for(iterFile in 1:ctFiles){
-  filePath = paste0(dirInp, StgyTbl$Directory[iterFile], '/', fileTmp)
-  ScenarioSet = StgyTbl$ScenarioSet[iterFile]
-  Strategy =  StgyTbl$Strategy[iterFile]
-  datTmp = read.rdf(filePath)
-  datTmpDT = Rdf2dt(datTmp, slotListTmp)
-  datTmpDT$ScenarioSet = ScenarioSet
-  datTmpDT$Strategy = Strategy
-  datMeas4 = bind_rows(datMeas4, datTmpDT)
-}
-
-datMeas4 = datMeas4 %>%
-  left_join(ScenTbl) %>%
-  filter(Scenario %in% ScenList) %>%
-  mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
-
-datMeas4Agg = datMeas4 %>%
-    mutate(Value = Value * 1.98347) %>%     # convert cfs to ac-ft
-    mutate(WYear = wyear(Date)) %>%         # add water year column
-    group_by(Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
-    summarise(Value = sum(Value)) %>%       # sum up shortages by above groups
-    ungroup()
-
-datMeas4Avg = datMeas4Agg %>%
-  group_by(Scenario, Period, Strategy) %>%
-  summarise(Value = mean(Value)) %>%
-  ungroup()
-
-datMeas4AvgHist = datMeas4Avg %>%
-  filter(Scenario == 'Historical', Strategy == 'Baseline') %>%
-  dplyr::select(-Scenario, -Period)
-
-datMeas4AvgFut = datMeas4Avg %>%
-  mutate(ValueHist = datMeas4AvgHist$Value) %>%
-  mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
-
-datMeas4AvgFut$Measure = 'Shortage'
-datMeas4AvgFut = datMeas4AvgFut %>% mutate(ValueColScle = ValueChange * -1)
-
 # Combine measures and plot
-datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut, datMeas4AvgFut)
+datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut)
 
 datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
-  levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
-    'MID', 'LDP', 'MIP', 'LPP')))
+  levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW')))
 datMeasPlot = datMeasPlot %>% left_join(StgyTbl)
 datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
   levels = unique(StgyTbl$StrategyLab))
@@ -263,10 +222,82 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'GallatinGrid2050s.png'), height = 10, width = 8)
+ggsave(paste0(dirOup, 'GallatinGrid2050s.png'), height = 7.5, width = 3)
 write.csv(datMeasPlot, paste0(dirOup, 'GallatinGrid2050s.csv'), row.names = F, quote = F)
 
-# Plot 2050s
+# Plot Historical
+datMeasPlotHist = datMeasPlot %>%
+  filter(Period == 'Historical')
+
+ggplot(data = datMeasPlotHist, aes(x = Measure, y = Scenario,
+  fill = ValueColScle, label = ValueTxt)) +
+  geom_tile(colour = 'white', size = 1) +
+  geom_text(size = 4, colour = 'white') +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+  xlab('') +
+  ylab('') +
+  scale_x_discrete(expand=c(0,0), position="top") +
+  scale_y_discrete(expand=c(0,0), position="right") +
+  theme(
+    axis.line.x=element_line(size=0.5, colour = 'gray60'),
+    axis.line.y=element_line(size=0.5, colour = 'gray60'),
+    axis.line=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+    axis.text.y=element_blank(),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank(),
+    strip.text.x=element_text(size = 10),
+    strip.text.y=element_text(size = 10, angle = 180)
+  ) +
+    coord_equal()
+
+ggsave(paste0(dirOup, 'GallatinGridHistorical.png'), height = 7.5, width = 3)
+
+# Plot Baseline 2050s
+datMeasPlotBase = datMeasPlot %>%
+  filter(StrategyLab == 'Baseline', Period %in% c('2050s', 'Historical') | is.na(Period))
+
+ggplot(data = datMeasPlotBase, aes(x = Measure, y = Scenario,
+  fill = ValueColScle, label = ValueTxt)) +
+  geom_tile(colour = 'white', size = 1) +
+  geom_text(size = 4, colour = 'white') +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+  xlab('') +
+  ylab('') +
+  scale_x_discrete(expand=c(0,0), position="top") +
+  scale_y_discrete(expand=c(0,0), position="right") +
+  theme(
+    axis.line.x=element_line(size=0.5, colour = 'gray60'),
+    axis.line.y=element_line(size=0.5, colour = 'gray60'),
+    axis.line=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+    axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank(),
+    strip.text.x=element_text(size = 10),
+    strip.text.y=element_blank()
+  ) +
+    coord_equal()
+
+ggsave(paste0(dirOup, 'GallatinGridBaseline2050s.png'), height = 7.5, width = 3)
+
+# Plot 2080s
 datMeasPlotFl = datMeasPlot %>%
   filter(Period %in% c('2080s', 'Historical') | is.na(Period))
 
@@ -300,5 +331,41 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'GallatinGrid2080s.png'), height = 10, width = 8)
+ggsave(paste0(dirOup, 'GallatinGrid2080s.png'), height = 7.5, width = 3)
 write.csv(datMeasPlot, paste0(dirOup, 'GallatinGrid2080s.csv'), row.names = F, quote = F)
+
+# Plot Baseline 2080s
+datMeasPlotBase = datMeasPlot %>%
+  filter(StrategyLab == 'Baseline', Period %in% c('2050s', 'Historical') | is.na(Period))
+
+ggplot(data = datMeasPlotBase, aes(x = Measure, y = Scenario,
+  fill = ValueColScle, label = ValueTxt)) +
+  geom_tile(colour = 'white', size = 1) +
+  geom_text(size = 4, colour = 'white') +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+  xlab('') +
+  ylab('') +
+  scale_x_discrete(expand=c(0,0), position="top") +
+  scale_y_discrete(expand=c(0,0), position="right") +
+  theme(
+    axis.line.x=element_line(size=0.5, colour = 'gray60'),
+    axis.line.y=element_line(size=0.5, colour = 'gray60'),
+    axis.line=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+    axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank(),
+    strip.text.x=element_text(size = 10),
+    strip.text.y=element_blank()
+  ) +
+    coord_equal()
+
+ggsave(paste0(dirOup, 'GallatinGridBaseline2080s.png'), height = 7.5, width = 3)

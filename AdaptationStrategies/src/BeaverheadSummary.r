@@ -293,6 +293,78 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
 ggsave(paste0(dirOup, 'BeaverheadGrid2050s.png'), height = 10, width = 8)
 write.csv(datMeasPlot, paste0(dirOup, 'BeaverheadGrid2050s.csv'), row.names = F, quote = F)
 
+# Plot Historical
+datMeasPlotHist = datMeasPlot %>%
+  filter(Period == 'Historical')
+
+ggplot(data = datMeasPlotHist, aes(x = Measure, y = Scenario,
+  fill = ValueColScle, label = ValueTxt)) +
+  geom_tile(colour = 'white', size = 1) +
+  geom_text(size = 4, colour = 'white') +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+  xlab('') +
+  ylab('') +
+  scale_x_discrete(expand=c(0,0), position="top") +
+  scale_y_discrete(expand=c(0,0), position="right") +
+  theme(
+    axis.line.x=element_line(size=0.5, colour = 'gray60'),
+    axis.line.y=element_line(size=0.5, colour = 'gray60'),
+    axis.line=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+    axis.text.y=element_blank(),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank(),
+    strip.text.x=element_text(size = 10),
+    strip.text.y=element_text(size = 10, angle = 180)
+  ) +
+    coord_equal()
+
+ggsave(paste0(dirOup, 'BeaverheadGridHistorical.png'), height = 6, width = 6)
+
+# Plot Baseline 2050s
+datMeasPlotBase = datMeasPlot %>%
+  filter(StrategyLab == 'Baseline', Period %in% c('2050s', 'Historical') | is.na(Period))
+
+ggplot(data = datMeasPlotBase, aes(x = Measure, y = Scenario,
+  fill = ValueColScle, label = ValueTxt)) +
+  geom_tile(colour = 'white', size = 1) +
+  geom_text(size = 4, colour = 'white') +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+  xlab('') +
+  ylab('') +
+  scale_x_discrete(expand=c(0,0), position="top") +
+  scale_y_discrete(expand=c(0,0), position="right") +
+  theme(
+    axis.line.x=element_line(size=0.5, colour = 'gray60'),
+    axis.line.y=element_line(size=0.5, colour = 'gray60'),
+    axis.line=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+    axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank(),
+    strip.text.x=element_text(size = 10),
+    strip.text.y=element_blank()
+  ) +
+    coord_equal()
+
+ggsave(paste0(dirOup, 'BeaverheadGridBaseline2050s.png'), height = 6, width = 4)
+
 # Plot 2080s
 datMeasPlotFl = datMeasPlot %>%
   filter(Period %in% c('2080s', 'Historical') | is.na(Period))
@@ -329,3 +401,39 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
 
 ggsave(paste0(dirOup, 'BeaverheadGrid2080s.png'), height = 10, width = 8)
 write.csv(datMeasPlot, paste0(dirOup, 'BeaverheadGrid2080s.csv'), row.names = F, quote = F)
+
+# Plot Baseline 2080s
+datMeasPlotBase = datMeasPlot %>%
+  filter(StrategyLab == 'Baseline', Period %in% c('2050s', 'Historical') | is.na(Period))
+
+ggplot(data = datMeasPlotBase, aes(x = Measure, y = Scenario,
+  fill = ValueColScle, label = ValueTxt)) +
+  geom_tile(colour = 'white', size = 1) +
+  geom_text(size = 4, colour = 'white') +
+  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+  xlab('') +
+  ylab('') +
+  scale_x_discrete(expand=c(0,0), position="top") +
+  scale_y_discrete(expand=c(0,0), position="right") +
+  theme(
+    axis.line.x=element_line(size=0.5, colour = 'gray60'),
+    axis.line.y=element_line(size=0.5, colour = 'gray60'),
+    axis.line=element_blank(),
+    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+    axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank(),
+    strip.text.x=element_text(size = 10),
+    strip.text.y=element_blank()
+  ) +
+    coord_equal()
+
+ggsave(paste0(dirOup, 'BeaverheadGridBaseline2080s.png'), height = 6, width = 4)
