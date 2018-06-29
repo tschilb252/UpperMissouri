@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Upper Missouri Basin Study
 #' Figures from DNRC
-#' Last Modified June 25 2018
+#' Last Modified June 26 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -51,7 +51,8 @@ ggsave(paste0(dirOup, 'HolterHydro.png'), height = 8, width = 10)
 IrrigSystDat = fread(paste0(dirInp, 'IrrigSyst.csv'))
 
 ggplot(data = IrrigSystDat) +
-  geom_line(aes(x = Year, y = Acres, color = `System Type`), size = 1) +
+  geom_line(aes(x = Year, y = Acres, color = `System Type`, linetype = `System Type`), alpha = 0.8, size = 1) +
+  geom_point(aes(x = Year, y = Acres, color = `System Type`, shape = `System Type`), size = 2, alpha = 0.8) +
   scale_y_continuous(labels = comma) +
   scale_x_continuous(breaks = unique(IrrigSystDat$Year), labels = unique(IrrigSystDat$Year)) +
   scale_color_manual(values = c('#B0170F', '#24449B', '#119B8B')) +

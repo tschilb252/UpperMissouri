@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Sun Strategy
-#' Last Modified June 26 2018
+#' Last Modified June 27 2018
 #################################################
 library(tidyverse)
 library(data.table)

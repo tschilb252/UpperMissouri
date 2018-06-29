@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Big Hole River Basin
-#' Last Modified June 25 2018
+#' Last Modified June 27 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -73,7 +73,7 @@ datMeasAvgFut = datMeasAvg %>%
   mutate(ValueHist = datMeasAvgHist$Value) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeasAvgFut$Measure = 'Shortage'
+datMeasAvgFut$Measure = 'Upper Irrigators Shortage'
 datMeasAvgFut = datMeasAvgFut %>% mutate(ValueColScle = ValueChange * -1)
 
 # In-stream flows
@@ -135,7 +135,7 @@ datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
   levels = rev(unique(StgyTbl$StrategyLab)))
 
 datMeasPlot$Measure = factor(datMeasPlot$Measure ,
-  levels = c('Shortage', 'Jul In-Stream Flow',
+  levels = c('Upper Irrigators Shortage', 'Jul In-Stream Flow',
   'Aug In-Stream Flow', 'Sep In-Stream Flow', 'Oct In-Stream Flow'))
 
 # Plot defs

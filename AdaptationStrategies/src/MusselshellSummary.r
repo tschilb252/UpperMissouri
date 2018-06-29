@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Musselshell River Basin
-#' Last Modified June 12 2018
+#' Last Modified June 27 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -173,7 +173,7 @@ datMeas3AvgFut = datMeas3Avg %>%
   mutate(ValueHist = datMeas3AvgHist$Value) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-datMeas3AvgFut$Measure = 'Shortage'
+datMeas3AvgFut$Measure = 'Lower Irrigators Shortage'
 datMeas3AvgFut = datMeas3AvgFut %>% mutate(ValueColScle = ValueChange * -1)
 
 # Combine measures and plot
@@ -187,7 +187,7 @@ datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
   levels = unique(StgyTbl$StrategyLab))
 
 datMeasPlot$Measure = factor(datMeasPlot$Measure ,
-  levels = c('New Reservoir EOWY Percent Full', 'Shortage', 'Jul In-Stream Flow',
+  levels = c('New Reservoir EOWY Percent Full', 'Lower Irrigators Shortage', 'Jul In-Stream Flow',
   'Aug In-Stream Flow', 'Sep In-Stream Flow', 'Oct In-Stream Flow'))
 
 # Plot defs
@@ -235,7 +235,7 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'MusselshellGrid2050s.png'), height = 10, width = 8)
+ggsave(paste0(dirOup, 'MusselshellGrid2050s.png'), height = 7.5, width = 3)
 write.csv(datMeasPlot, paste0(dirOup, 'MusselshellGrid2050s.csv'), row.names = F, quote = F)
 
 # Plot Historical
@@ -272,7 +272,7 @@ ggplot(data = datMeasPlotHist, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'MusselshellGridHistorical.png'), height = 6, width = 6)
+ggsave(paste0(dirOup, 'MusselshellGridHistorical.png'), height = 7.5, width = 3)
 
 # Plot Baseline 2050s
 datMeasPlotBase = datMeasPlot %>%
@@ -308,7 +308,7 @@ ggplot(data = datMeasPlotBase, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'MusselshellGridBaseline2050s.png'), height = 6, width = 4)
+ggsave(paste0(dirOup, 'MusselshellGridBaseline2050s.png'), height = 7.5, width = 3)
 
 # Plot 2080s
 datMeasPlotFl = datMeasPlot %>%
@@ -344,7 +344,7 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'MusselshellGrid2080s.png'), height = 10, width = 8)
+ggsave(paste0(dirOup, 'MusselshellGrid2080s.png'), height = 7.5, width = 3)
 write.csv(datMeasPlot, paste0(dirOup, 'MusselshellGrid2080s.csv'), row.names = F, quote = F)
 
 # Plot Baseline 2080s
@@ -381,4 +381,4 @@ ggplot(data = datMeasPlotBase, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'MusselshellGridBaseline2080s.png'), height = 6, width = 4)
+ggsave(paste0(dirOup, 'MusselshellGridBaseline2080s.png'), height = 7.5, width = 3)
