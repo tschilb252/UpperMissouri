@@ -24,7 +24,11 @@ ScenTbl = fread('lib/ScenarioTable.csv')
 StgyTbl = fread('lib/StrategyTableSun.csv')
 MeasTbl = fread('lib/MeasureTableSun.csv')
 
-ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW', 'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
+ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
+  'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
+
+dateStrt = as.Date('1986-10-01')
+dateEnd = as.Date('1995-09-30')
 #################################################
 #'  Read in Data
 

@@ -2,6 +2,3 @@ Directory,Strategy,StrategyLab,ScenarioSet
 "CC All,GeneralMRM,Baseline",Baseline,Baseline,CC
 "CC All,GeneralMRM,GallatinCanyonFerryPipeline",CanyonFerryPipeline,Canyon Ferry Pipeline,CC
 "CC All,GeneralMRM,GallatinInfilGallery",InfilGallery,Groundwater Infiltration Gallery,CC
-"PaleoEvent,GeneralMRM,Baseline",Baseline,Baseline,PaleoEvent
-"PaleoEvent,GeneralMRM,GallatinCanyonFerryPipeline",CanyonFerryPipeline,Canyon Ferry Pipeline,PaleoEvent
-"PaleoEvent,GeneralMRM,GallatinInfilGallery",InfilGallery,Groundwater Infiltration Gallery,PaleoEvent

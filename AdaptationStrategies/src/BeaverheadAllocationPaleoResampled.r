@@ -28,8 +28,8 @@ MeasTbl = fread('lib/MeasureTableBeaverhead.csv')
 ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
   'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
 
-dateStrt = as.Date('1986-10-01')
-dateEnd = as.Date('1995-09-30')
+dateStrt = as.Date('1955-10-01')
+dateEnd = as.Date('1968-09-30')
 #################################################
 #'  Read in Data
 
@@ -86,7 +86,7 @@ datMeasAgg$StrategyLab = factor(datMeasAgg$StrategyLab,
       levels = unique(StgyTbl$StrategyLab))
 
 datMeasPlot = datMeasAgg %>%
-  filter(Trace == 139) %>%
+  filter(Trace == 139,  Date >= dateStrt, Date <= dateEnd) %>%
   mutate(Year = year(Date))
 
 datMeasPlot1 = datMeasPlot %>% filter(Measure == 'CCWSC Allocation')
@@ -96,10 +96,10 @@ Plot1 = ggplot(data = datMeasPlot1) +
   # geom_ribbon(aes(x = Year, ymin = 0.5, ymax = 0.75), fill = '#FCCA8B', alpha = 0.3) +
   # geom_ribbon(aes(x = Year, ymin = 0, ymax = 0.5), fill = '#DC8C6B', alpha = 0.3) +
   geom_hline(yintercept = c(0.77, 0.5, 0.25), alpha = 0.6, linetype = 3, size = 0.2) +
-  geom_line(aes(x = Year, y = Value, colour = StrategyLab)) +
-  geom_point(aes(x = Year, y = Value, colour = StrategyLab, shape = StrategyLab)) +
+  geom_line(aes(x = Year, y = Value, colour = StrategyLab, linetype = StrategyLab), alpha = 0.8, size = 1) +
+  geom_point(aes(x = Year, y = Value, colour = StrategyLab, shape = StrategyLab), size = 2, alpha = 0.8) +
   facet_wrap(~Measure, ncol = 1) +
-  scale_colour_manual(values = c('black', '#25499F', '#23A491', '#7A5BA9')) +
+  scale_colour_manual(values = c('black', '#B0170F', '#24449B', '#119B8B')) +
   scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1),
     labels = paste0(c(0, 25, 50, 75, 100), '%')) +
   scale_x_continuous(labels = function(x) round(as.numeric(x), digits=0)) +
@@ -131,10 +131,10 @@ Plot2 = ggplot(data = datMeasPlot2) +
     # geom_ribbon(aes(x = Year, ymin = 0.5, ymax = 0.75), fill = '#FCCA8B', alpha = 0.3) +
     # geom_ribbon(aes(x = Year, ymin = 0, ymax = 0.5), fill = '#DC8C6B', alpha = 0.3) +
     geom_hline(yintercept = c(0.77, 0.5, 0.25), alpha = 0.6, linetype = 3, size = 0.2) +
-    geom_line(aes(x = Year, y = Value, colour = StrategyLab)) +
-    geom_point(aes(x = Year, y = Value, colour = StrategyLab, shape = StrategyLab)) +
+    geom_line(aes(x = Year, y = Value, colour = StrategyLab, linetype = StrategyLab), alpha = 0.8, size = 1) +
+    geom_point(aes(x = Year, y = Value, colour = StrategyLab, shape = StrategyLab), size = 2, alpha = 0.8) +
     facet_wrap(~Measure, ncol = 1) +
-    scale_colour_manual(values = c('black', '#25499F', '#23A491', '#7A5BA9')) +
+    scale_colour_manual(values = c('black', '#B0170F', '#24449B', '#119B8B')) +
     scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1),
       labels = c('Bank', paste0(c(25, 50, 75, 100), '%'))) +
     scale_x_continuous(labels = function(x) round(as.numeric(x), digits=0)) +

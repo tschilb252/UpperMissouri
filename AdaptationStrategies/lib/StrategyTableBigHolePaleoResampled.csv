@@ -1,0 +1,5 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"PaleoResampled,GeneralMRM,Baseline",Baseline,60cfs Summer ISF,PaleoResampled
+"PaleoResampled,GeneralMRM,BigHole40cfsSummerMin",SummerMax40cfs,40cfs Summer ISF,PaleoResampled
+"PaleoResampled,GeneralMRM,BigHole20cfsSummerMin",SummerMax20cfs,20cfs Summer ISF,PaleoResampled
+"PaleoResampled,GeneralMRM,BigHoleNoSummerMin",NoSummerMax,No Summer ISF,PaleoResampled
