@@ -1,0 +1,5 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"CC All,GeneralMRM,SunPishkunAdd30kAcFt",Add30kAcFt,GID New Res.,CC
+"CC All,GeneralMRM,SunPishkunAdd30kAcFtIncPSCCap",Add30kAcFtIncPSCCap,GID New Res. and Inc. Pishkun Supply Canal Cap.,CC
+"PaleoEvent,GeneralMRM,SunPishkunAdd30kAcFt",Add30kAcFt,GID New Res.,PaleoEvent
+"PaleoEvent,GeneralMRM,SunPishkunAdd30kAcFtIncPSCCap",Add30kAcFtIncPSCCap,GID New Res. and Inc. Pishkun Supply Canal Cap.,PaleoEvent
