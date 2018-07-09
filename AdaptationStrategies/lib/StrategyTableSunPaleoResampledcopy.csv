@@ -1,0 +1,6 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"PaleoResampled,GeneralMRM,Baseline",Baseline,Baseline,PaleoResampled
+"PaleoResampled,GeneralMRM,SunIncWCFC175cfs",WCFC175cfs,175cfs Willow Creek Feeder Canal,PaleoResampled
+"PaleoResampled,GeneralMRM,SunPishkunAdd30kAcFt",PishkunAdd30kAcFt,20kAcFt Additional GID Storage,PaleoResampled
+"PaleoResampled,GeneralMRM,SunPishkunAdd30kAcFtIncPSCCap",PishkunAdd30kAcFtIncPSCCap,Inc. Storage and Canal Cap.,PaleoResampled
+"PaleoResampled,GeneralMRM,SunPishkunFSIDAcct",PishkunFSIDAcct,FSID Storage Account,PaleoResampled

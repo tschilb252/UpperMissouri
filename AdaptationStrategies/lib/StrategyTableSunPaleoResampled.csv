@@ -1,0 +1,4 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"PaleoResampled,GeneralMRM,Baseline",Baseline,Baseline,PaleoResampled
+"PaleoResampled,GeneralMRM,SunPishkunFSIDAcct",PishkunFSIDAcct,FSID Storage Account,PaleoResampled
+"PaleoResampled,GeneralMRM,SunIncWCFC175cfs",IncWCFC175cfs,Inc WCFC Capacity,PaleoResampled
