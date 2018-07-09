@@ -65,6 +65,11 @@ datMeasAgg3 = datMeasAgg2 %>%
   group_by(Slot, Period, Scenario) %>%
   dplyr::summarise(ValueMin = min(Value), ValueMax = max(Value), ValueMedian = median(Value))
 
+datMeasComp = datMeasAgg %>%
+  mutate(CFValueFlag = ifelse(Value > 0, 1, 0)) %>%
+  ungroup() %>%
+  dplyr::select(Wyear, Trace, ScenarioSet, Scenario, Strategy, Period, CFValueFlag)
+
 # TiberFlushingRelease
 fileTmp = fileList[2]
 datMeas2 = data.table()
@@ -98,12 +103,42 @@ datMeas2Agg3 = datMeas2Agg2 %>%
   group_by(Slot, Period, Scenario) %>%
   dplyr::summarise(ValueMin = min(Value), ValueMax = max(Value), ValueMedian = median(Value))
 
+datMeas2Comp = datMeas2Agg %>%
+  mutate(TiberValueFlag = ifelse(Value > 0, 1, 0)) %>%
+  ungroup() %>%
+  dplyr::select(Wyear, Trace, ScenarioSet, Strategy, Scenario, Period, TiberValueFlag)
+
+datMeas3 = left_join(datMeasComp, datMeas2Comp)
+
+datMeas3Agg = datMeas3 %>%
+    mutate(ValueFlag = ifelse(CFValueFlag > 0 & TiberValueFlag > 0, 1, 0)) %>%
+    group_by(Trace, ScenarioSet, Strategy, Scenario, Period) %>%
+    dplyr::summarise(Value = sum(ValueFlag, na.rm = T))
+
+datMeas3Agg2 = datMeas3Agg %>%
+  group_by(Period, Scenario) %>%
+  dplyr::summarise(ValueMin = min(Value), ValueMax = max(Value), ValueMedian = median(Value))
+datMeas3Agg2$Measure = 'Combined Releases'
+
 datMeasPlot = bind_rows(datMeasAgg3, datMeas2Agg3)
 
 datMeasPlot = datMeasPlot %>% left_join(MeasTbl)
 
-datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
-    levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW')))
+datMeasPlot = datMeasPlot %>% bind_rows(datMeas3Agg2)
+
+xAxsTbl = data.table(Scenario = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW')), ScenBreaks = 1:6)
+datMeasPlot = datMeasPlot %>% left_join(xAxsTbl)
+
+# datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
+#     levels = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW'))
+datMeasPlot$Measure = factor(datMeasPlot$Measure,
+  levels = c('Canyon Ferry Releases', 'Tiber Releases', 'Combined Releases'))
+
+datMeasPlot$Measure = factor(datMeasPlot$Measure,
+  levels = c('Combined Releases', 'Tiber Releases', 'Canyon Ferry Releases'))
+
+# Pull out Historical Baseline to plot as line
+datMeasPlotHist = datMeasPlot %>% filter()
 
 # Plots Canyon Ferry Years with Releases
 datMeasPlotFl = datMeasPlot %>% filter(Period %in% c('Historical', '2050s'))
@@ -121,6 +156,37 @@ ggplot() +
   		strip.background = element_rect(fill = F),
   		strip.text = element_text(size = 15)) +
   	xlab('') +
-  	ylab('') +
+  	ylab('No. Releases') +
     facet_wrap(~Measure) +
     coord_flip()
+
+ggsave(paste0(dirOup, 'EcologicalFlowReleasesBar.png'), height = 8, width = 10)
+
+
+ggplot() +
+  geom_rect(aes(xmin = xAxsTbl$ScenBreaks[[2]] - 0.5, xmax = xAxsTbl$ScenBreaks[[2]] + 0.5,
+    ymin = -Inf, ymax = Inf), alpha = 0.2) +
+  geom_rect(aes(xmin = xAxsTbl$ScenBreaks[[4]] - 0.5, xmax = xAxsTbl$ScenBreaks[[4]] + 0.5,
+    ymin = -Inf, ymax = Inf), alpha = 0.2) +
+  geom_rect(aes(xmin = xAxsTbl$ScenBreaks[[6]] - 0.5, xmax = xAxsTbl$ScenBreaks[[6]] + 0.5,
+    ymin = -Inf, ymax = Inf), alpha = 0.2) +
+  geom_linerange(data = datMeasPlotFl, aes(x = ScenBreaks,
+    ymin = ValueMin,
+    ymax = ValueMax,
+    group = Measure,
+    colour = Measure),
+    position = position_dodge(width = 1),
+    alpha = 0.8, size = 10) +
+    scale_colour_manual(values = c('black', '#24449B', '#119B8B')) +
+  	theme_bw() +
+    scale_x_continuous(breaks = xAxsTbl$ScenBreaks, labels = xAxsTbl$Scenario) +
+  	theme(legend.position = 'bottom',
+  		legend.title = element_blank(),
+  		axis.text = element_text(size = 12),
+  		strip.background = element_rect(fill = F),
+  		strip.text = element_text(size = 15)) +
+  	xlab('') +
+  	ylab('No. Releases') +
+    coord_flip()
+
+ggsave(paste0(dirOup, 'EcologicalFlowReleasesBar.png'), height = 10, width = 10)
