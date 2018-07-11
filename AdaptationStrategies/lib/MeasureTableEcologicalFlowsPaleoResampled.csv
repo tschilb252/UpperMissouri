@@ -1,3 +1,3 @@
-Measure,File
-cFRFlushingRelease,cFRFlushingRelease.rdf
-TiberFlushingRelease,TiberFlushingRelease.rdf
+Measure,File,Slot
+Canyon Ferry Releases,cFRFlushingRelease.rdf,Canyon Ferry Data.Flushing Release Rate
+Tiber Releases,TiberFlushingRelease.rdf,Tiber Data.Flushing Release Rate
