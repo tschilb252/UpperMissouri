@@ -18,9 +18,9 @@ Other Irrigators Shortages,DepletionShortage.rdf,Sun River Valley Ditch Irrigato
 Other Irrigators Shortages,DepletionShortage.rdf,Upper Elk Creek Irrigation.Depletion Shortage
 Other Irrigators Shortages,DepletionShortage.rdf,Upstream Irrigation.Depletion Shortage
 Other Irrigators Shortages,DepletionShortage.rdf,Willow Creek Irrigation.Depletion Shortage
-Gibson EOWY Storage,ResStorage.rdf,Gibson Res.Storage
-Pishkun EOWY Storage,ResStorage.rdf,Pishkun Res.Storage
-Willow Creek EOWY Storage,ResStorage.rdf,Willow Creek Res.Storage
+Gibson Count Max Storage,ResStorage.rdf,Gibson Res.Storage
+Pishkun Count Max Storage,ResStorage.rdf,Pishkun Res.Storage
+Willow Creek Count Max Storage,ResStorage.rdf,Willow Creek Res.Storage
 Upper Sun August Flow,GageFlow.rdf,06080900 Sun bl Diversion Dam nr Augusta.Gage Inflow
 Lower Sun August Flow,GageFlow.rdf,06089000 Sun nr Vaughn1.Gage Inflow
 FSID WC Contract Volume,FSIDAcct.rdf,Sun Contract Water Tracking.Fort Shaw ID Willow Creek Contract Volume

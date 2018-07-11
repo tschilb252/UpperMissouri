@@ -1,0 +1,4 @@
+Directory,Strategy,StrategyLab,ScenarioSet
+"PaleoResampled,GeneralMRM,Baseline",Baseline,Baseline,PaleoResampled
+"PaleoResampled,GeneralMRM,SunPishkunAdd30kAcFt",PishkunAdd30kAcFt,Pishkun Add 30k AF,PaleoResampled
+"PaleoResampled,GeneralMRM,SunPishkunAdd30kAcFtIncPSCCap",PishkunAdd30kAcFtIncPSCCap,Pishkun Add 30k AF & Inc PSC Cap,PaleoResampled
