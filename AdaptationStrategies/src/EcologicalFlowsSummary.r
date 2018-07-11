@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Ecological Flows (Ecological Flows) Strategy
-#' Last Modified June 11 2018
+#' Last Modified July 10 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -50,7 +50,8 @@ for(iterFile in 1:ctFiles){
 datMeasAgg = datMeas %>%
   mutate(Wyear = wyear(Date), Month = month(Date)) %>%
   dplyr::rename(Slot = RiverWareSlot) %>%
-  filter(Month == 8) %>%
+  filter(Month == 8 & Slot != '06102050 Marias nr Loma.Gage Inflow' |
+    Month == 6 & Slot == '06102050 Marias nr Loma.Gage Inflow') %>%
   group_by(Wyear, Trace, ScenarioSet, Strategy, Slot) %>%
   dplyr::summarise(Value = mean(Value, na.rm = T))
 
@@ -205,8 +206,54 @@ datMeas4AvgFut = datMeas4Avg %>%
 
 datMeas4AvgFut = datMeas4AvgFut %>% mutate(ValueColScle = ValueChange)
 
+# Irrigators Shortage
+fileTmp = fileList[5]
+slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
+datMeas5 = data.table()
+for(iterFile in 1:ctFiles){
+  filePath = paste0(dirInp, StgyTbl$Directory[iterFile], '/', fileTmp)
+  ScenarioSet = StgyTbl$ScenarioSet[iterFile]
+  Strategy =  StgyTbl$Strategy[iterFile]
+  datTmp = read.rdf(filePath)
+  datTmpDT = Rdf2dt(datTmp, slotListTmp)
+  datTmpDT$ScenarioSet = ScenarioSet
+  datTmpDT$Strategy = Strategy
+  datMeas5 = bind_rows(datMeas5, datTmpDT)
+}
+
+datMeas5 = datMeas5 %>%
+  left_join(ScenTbl) %>%
+  filter(Scenario %in% ScenList) %>%
+  mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
+
+datMeas5Agg = datMeas5 %>%
+    mutate(Value = Value * 1.98347) %>%     # convert cfs to ac-ft
+    mutate(WYear = wyear(Date)) %>%         # add water year column
+    dplyr::rename(Slot = RiverWareSlot) %>%
+    left_join(MeasTbl) %>%
+    group_by(Measure, Scenario, Period, Strategy, WYear) %>%   # group by scenario, period, strategy, and water year
+    summarise(Value = sum(Value)) %>%       # sum up shortages by above groups
+    ungroup()
+
+datMeas5Avg = datMeas5Agg %>%
+  group_by(Measure, Scenario, Period, Strategy) %>%
+  summarise(Value = mean(Value)) %>%
+  ungroup()
+
+datMeas5AvgHist = datMeas5Avg %>%
+  filter(Scenario == 'Historical', Strategy == 'Baseline') %>%
+  rename(ValueHist = Value) %>%
+  dplyr::select(-Scenario, -Period, -Strategy)
+
+datMeas5AvgFut = datMeas5Avg %>%
+  left_join(datMeas5AvgHist) %>%
+  mutate(ValueChange = ifelse(Value > 0, (Value - ValueHist) / ValueHist * 100, 0))
+
+datMeas5AvgFut = datMeas5AvgFut %>% mutate(ValueColScle = ValueChange * -1)
+
+
 # Combine measures and plot
-datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut, datMeas4AvgFut)
+datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut, datMeas4AvgFut, datMeas5AvgFut)
 
 datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
   levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
@@ -215,8 +262,8 @@ datMeasPlot = datMeasPlot %>% left_join(StgyTbl)
 datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
   levels = unique(StgyTbl$StrategyLab))
 
-datMeasPlot$Measure = factor(datMeasPlot$Measure ,
-  levels = MeasTbl$Measure)
+datMeasPlot$Measure = factor(datMeasPlot$Measure,
+  levels = unique(MeasTbl$Measure))
 
 # Plot defs
 pctLow = 5
@@ -227,16 +274,18 @@ datMeasPlot = datMeasPlot %>%
   mutate(ValueTxt = ifelse(abs(ValueColScle ) > pctHigh, '•', '')) %>%
   mutate(ValueColScle = ifelse(abs(ValueColScle) < pctLow, 0,
   ifelse(ValueColScle > pctHigh, pctHigh,
-    ifelse(ValueColScle < -1 * pctHigh, -1 * pctHigh, ValueColScle))))
+    ifelse(ValueColScle < -1 * pctHigh, -1 * pctHigh, ValueColScle)))) %>%
+  mutate(ValueTxtArrow = ifelse(ValueChange > pctLow, '△', ifelse(ValueColScle < pctLow * -1, '▽', '')))
 
 # Plot 2050s
 datMeasPlotFl = datMeasPlot %>%
   filter(Period %in% c('2050s', 'Historical') | is.na(Period))
 
 ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
-  fill = ValueColScle, label = ValueTxt)) +
-  geom_tile(colour = 'white', size = 1) +
-  geom_text(size = 4, colour = 'white') +
+  fill = ValueColScle)) +
+  geom_tile(colour = 'white', size = 2) +
+  geom_text(aes(label = ValueTxt), size = 4, colour = 'white') +
+  geom_text(aes(label = ValueTxtArrow), size = 6, colour = 'black', alpha = 0.8) +
   facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
   scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
   xlab('') +
@@ -263,7 +312,8 @@ ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
   ) +
     coord_equal()
 
-ggsave(paste0(dirOup, 'EcologicalFlowsGrid2050s.png'), height = 7.5, width = 3)
+ggsave(paste0(dirOup, 'EcologicalFlowsGrid2050s.png'), height = 10, width = 3.5,
+  bg = 'transparent')
 write.csv(datMeasPlot, paste0(dirOup, 'EcologicalFlowsGrid2050s.csv'), row.names = F, quote = F)
 
 # Plot Historical

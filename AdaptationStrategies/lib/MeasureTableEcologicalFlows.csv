@@ -1,9 +1,19 @@
 Measure,File,Slot
 Missouri at Virgelle August Flow,GageFlow.rdf,06109500 Missouri at Virgelle.Gage Inflow
 Missouri River at Holter August Flow,GageFlow.rdf,06066500 Missouri bl Holter Dam.Gage Inflow
-Marias near Loma August Flow,GageFlow.rdf,06102050 Marias nr Loma.Gage Inflow
+Marias near Loma June Flow,GageFlow.rdf,06102050 Marias nr Loma.Gage Inflow
 Canyon Ferry EOWY Storage,ResStorage.rdf,Canyon Ferry.Storage
+Tiber EOWY Storage,ResStorage.rdf,Tiber.Storage
 Canyon Ferry Hydropower Production,Energy.rdf,Canyon Ferry.Energy
 DNRC Broadwater Hydropower Production,ResOutflow.rdf,Toston.Outflow
-Tiber EOWY Storage,ResStorage.rdf,Tiber.Storage
 Tiber Hydropower Production,Energy.rdf,Tiber.Energy
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users HVID Contract Only.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users HVID Irrigation above Res.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users HVID Res to Prickly Pear.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users HVID Ten Mile NWC.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users Prickly Pear_Headwaters.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users Prickly Pear_Headwaters to HV Canal.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users Prickly Pear_HV Canal to Ten Mile.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users Silver Creek.Diversion Shortage
+Canyon Ferry Shortage,DiversionShortage.rdf,Water Users Ten Mile.Diversion Shortage
+Tiber Irrigators Shortage,DiversionShortage.rdf,Tiber Irrigators.Diversion Shortage

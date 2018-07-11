@@ -148,6 +148,7 @@ for(iterFile in 1:ctFiles){
   datMeas3 = bind_rows(datMeas3, datTmpDT)
 }
 
+# Lower Irrigators Shortage
 datMeas3 = datMeas3 %>%
   left_join(ScenTbl) %>%
   filter(Scenario %in% ScenList) %>%

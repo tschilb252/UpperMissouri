@@ -144,26 +144,6 @@ datMeasPlotHist = datMeasPlot %>% filter()
 datMeasPlotFl = datMeasPlot %>% filter(Period %in% c('Historical', '2050s'))
 
 ggplot() +
-  geom_linerange(data = datMeasPlotFl, aes(x = Scenario,
-    ymin = ValueMin,
-    ymax = ValueMax),
-    position = position_dodge(width = 1),
-    alpha = 0.8, size = 10) +
-  	theme_bw() +
-  	theme(legend.position = 'bottom',
-  		legend.title = element_blank(),
-  		axis.text = element_text(size = 12),
-  		strip.background = element_rect(fill = F),
-  		strip.text = element_text(size = 15)) +
-  	xlab('') +
-  	ylab('No. Releases') +
-    facet_wrap(~Measure) +
-    coord_flip()
-
-ggsave(paste0(dirOup, 'EcologicalFlowReleasesBar.png'), height = 8, width = 10)
-
-
-ggplot() +
   geom_rect(aes(xmin = xAxsTbl$ScenBreaks[[2]] - 0.5, xmax = xAxsTbl$ScenBreaks[[2]] + 0.5,
     ymin = -Inf, ymax = Inf), alpha = 0.2) +
   geom_rect(aes(xmin = xAxsTbl$ScenBreaks[[4]] - 0.5, xmax = xAxsTbl$ScenBreaks[[4]] + 0.5,
