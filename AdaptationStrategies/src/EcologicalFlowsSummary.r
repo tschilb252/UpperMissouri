@@ -251,7 +251,6 @@ datMeas5AvgFut = datMeas5Avg %>%
 
 datMeas5AvgFut = datMeas5AvgFut %>% mutate(ValueColScle = ValueChange * -1)
 
-
 # Combine measures and plot
 datMeasPlot = bind_rows(datMeasAvgFut, datMeas2AvgFut, datMeas3AvgFut, datMeas4AvgFut, datMeas5AvgFut)
 
