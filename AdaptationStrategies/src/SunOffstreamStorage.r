@@ -33,9 +33,6 @@ stgyList = unique(StgyTbl$Strategy)
 ctFiles = nrow(StgyTbl)
 
 # Reservoir fill
-# working on count of times the new storage fills under each scenario
-# use count of number of days full per year...
-
 fileTmp = fileList[2]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas2 = data.table()
@@ -114,22 +111,11 @@ ggplot(data = datMeasPlot, aes(x=Scenario, y=Full, fill=StrategyLab)) +
 ggsave(paste0(dirOup, 'SunPishkunAdd30kAcFtFull.png'), height = 8, width = 10)
 
 
-
-# LookUp Table Locations
-MeasTbl = fread('lib/MeasureTableSun.csv')
-StgyTbl = fread('lib/StrategyTableSunPaleoResampled_Pishkun.csv')
-
-ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
-  'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
-
+StgyTbl = fread('lib/StrategyTableSunPishkunAdd_wBase.csv')
 dateStrt = as.Date('1986-10-01')
 dateEnd = as.Date('1995-09-30')
 #################################################
 #'  Read in Data
-
-fileList = unique(MeasTbl$File)
-stgyList = unique(StgyTbl$Strategy)
-ctFiles = nrow(StgyTbl)
 
 # Shortages
 fileTmp = fileList[1]
@@ -160,8 +146,13 @@ datMeasAgg = datMeas %>%
     summarise(Value = sum(Value)) %>%       # sum up shortages by above groups
     ungroup()
 
+tmp2 = datMeasAgg %>%
+  left_join(ScenTbl) %>%
+  filter(Scenario %in% ScenList) %>%
+  mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
 
-datMeasPlot = datMeasAgg %>% filter(Scenario == 'Historical', WYear >= 1985, WYear <= 1990)
+datMeasPlot = datMeasAgg %>% filter(Scenario == 'Historical', WYear >= 1985, WYear <= 1990) %>%
+  filter(Measure == 'GID Shortages')
 datMeasPlot = datMeasPlot %>% left_join(StgyTbl)
 datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
   levels = unique(StgyTbl$StrategyLab))
@@ -171,9 +162,9 @@ datMeasPlot$Measure = factor(datMeasPlot$Measure ,
 
 ggplot(data = datMeasPlot) +
   geom_line(aes(x = WYear, y = Value, colour = StrategyLab)) +
-  geom_point(aes(x = Year, y = Value, colour = StrategyLab, shape = StrategyLab)) +
+  geom_point(aes(x = WYear, y = Value, colour = StrategyLab, shape = StrategyLab)) +
   facet_wrap(~Measure, scales = 'free', ncol = 1) +
-  scale_colour_manual(values = c('black', '#25499F', '#23A491', '#7A5BA9')) +
+  scale_colour_manual(values = c('#25499F', '#23A491')) +
   scale_x_continuous(labels = function(x) round(as.numeric(x), digits=0)) +
   xlab('') +
   ylab('') +
@@ -198,4 +189,4 @@ ggplot(data = datMeasPlot) +
     strip.text.y=element_text(size = 10)
   )
 
-ggsave(paste0(dirOup, 'SunDryYearsShortage.png'), height = 8, width = 10)
+ggsave(paste0(dirOup, 'SunPiskunAddStorage_GIDShortage.png'), height = 8, width = 10)
