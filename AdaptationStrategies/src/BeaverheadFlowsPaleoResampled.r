@@ -60,7 +60,7 @@ datMeas = datMeas %>%
 datMeasAgg = datMeas %>%
   mutate(Wyear = wyear(Date), Month = month(Date)) %>%
   dplyr::rename(Slot = RiverWareSlot) %>%
-  filter(Month %in% c(11:12, 1:3)) %>%
+  filter(Month %in% c(10:12, 1:4)) %>%
   group_by(Wyear, Trace, ScenarioSet, Scenario, Period, Strategy, Slot) %>%
   dplyr::summarise(Value = mean(Value, na.rm = T)) %>%
   left_join(MeasTbl) %>%

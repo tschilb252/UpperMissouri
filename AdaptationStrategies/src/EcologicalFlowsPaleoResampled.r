@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Bar figures for the Upper Missouri
 #' Basin Study, Ecological Flows (Ecological Flows) Strategy
-#' Last Modified June 29 2018
+#' Last Modified July 11 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -129,37 +129,30 @@ datMeasPlot = datMeasPlot %>% bind_rows(datMeas3Agg2)
 xAxsTbl = data.table(Scenario = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW')), ScenBreaks = 1:6)
 datMeasPlot = datMeasPlot %>% left_join(xAxsTbl)
 
-# datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
-#     levels = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW'))
+datMeasPlot$Scenario = factor(datMeasPlot$Scenario,
+    levels = rev(c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW')))
+
 datMeasPlot$Measure = factor(datMeasPlot$Measure,
   levels = c('Canyon Ferry Releases', 'Tiber Releases', 'Combined Releases'))
 
-datMeasPlot$Measure = factor(datMeasPlot$Measure,
-  levels = c('Combined Releases', 'Tiber Releases', 'Canyon Ferry Releases'))
+# datMeasPlot$Measure = factor(datMeasPlot$Measure,
+#   levels = c('Combined Releases', 'Tiber Releases', 'Canyon Ferry Releases'))
 
 # Pull out Historical Baseline to plot as line
 datMeasPlotHist = datMeasPlot %>% filter()
 
-# Plots Canyon Ferry Years with Releases
 datMeasPlotFl = datMeasPlot %>% filter(Period %in% c('Historical', '2050s'))
 
-ggplot() +
-  geom_rect(aes(xmin = xAxsTbl$ScenBreaks[[2]] - 0.5, xmax = xAxsTbl$ScenBreaks[[2]] + 0.5,
-    ymin = -Inf, ymax = Inf), alpha = 0.2) +
-  geom_rect(aes(xmin = xAxsTbl$ScenBreaks[[4]] - 0.5, xmax = xAxsTbl$ScenBreaks[[4]] + 0.5,
-    ymin = -Inf, ymax = Inf), alpha = 0.2) +
-  geom_rect(aes(xmin = xAxsTbl$ScenBreaks[[6]] - 0.5, xmax = xAxsTbl$ScenBreaks[[6]] + 0.5,
-    ymin = -Inf, ymax = Inf), alpha = 0.2) +
-  geom_linerange(data = datMeasPlotFl, aes(x = ScenBreaks,
+ggplot(data = datMeasPlotFl) +
+  geom_linerange(aes(x = Scenario,
     ymin = ValueMin,
     ymax = ValueMax,
-    group = Measure,
     colour = Measure),
     position = position_dodge(width = 1),
     alpha = 0.8, size = 10) +
-    scale_colour_manual(values = c('black', '#24449B', '#119B8B')) +
+    scale_colour_manual(values = c('#24449B', '#119B8B', 'black'), guide = F) +
   	theme_bw() +
-    scale_x_continuous(breaks = xAxsTbl$ScenBreaks, labels = xAxsTbl$Scenario) +
+    facet_wrap(~Measure) +
   	theme(legend.position = 'bottom',
   		legend.title = element_blank(),
   		axis.text = element_text(size = 12),
