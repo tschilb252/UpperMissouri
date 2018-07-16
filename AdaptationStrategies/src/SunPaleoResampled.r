@@ -91,6 +91,7 @@ datMeasPlot = datMeasAggDist %>%
   mutate(Year = year(Date))
 
 datMeasPlot1 = datMeasPlot %>% filter(Measure == 'Willow Creek EOWY Storage')
+datMeasPlot1 = datMeasPlot1 %>% filter(Strategy != 'PishkunFSIDAcct')
 
 ggplot(data = datMeasPlot1) +
   # geom_ribbon(aes(x = Year, ymin = 0.75, ymax = 0.95), fill = '#FDEE91', alpha = 0.3) +
@@ -126,7 +127,7 @@ ggplot(data = datMeasPlot1) +
     strip.text.x=element_text(size = 10),
     strip.text.y=element_text(size = 10)
   )
-ggsave(paste0(dirOup, 'WillowCreekStorageLongestDrought_V2.png'), height = 8, width = 15)
+ggsave(paste0(dirOup, 'WillowCreekStorageLongestDrought_V3.png'), height = 8, width = 15)
 
 #################################################################################################
 
