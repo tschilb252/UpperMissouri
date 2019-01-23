@@ -57,7 +57,7 @@ datMeas2Avg = datMeas2 %>%
     dplyr::rename(Slot = RiverWareSlot) %>%
     left_join(MeasTbl) %>%
     filter(Slot == 'Pishkun Res.Storage') %>%
-    filter(Month == 06, Day == 01) %>%
+    filter(Month == 09, Day == 30) %>%
     group_by(Measure, Scenario, Period, Strategy) %>%   # group by scenario, period, and strategy
     summarise(Value = mean(Value)) %>%       # count of max storage
     ungroup()
@@ -86,7 +86,7 @@ ggplot(data = datMeasPlot, aes(x=Scenario, y=Full, fill=StrategyLab)) +
       scale_y_continuous(limit=c(0,100)) +
 #      scale_x_continuous(labels = function(x) round(as.numeric(x), digits=0)) +
       xlab('') +
-      ylab('Avg Percent Full on June 1') +
+      ylab('Avg Percent Full on Sept 30') +
       theme(
         axis.line.x=element_line(size=0.5, colour = 'gray60'),
         axis.line.y=element_line(size=0.5, colour = 'gray60'),
@@ -108,10 +108,13 @@ ggplot(data = datMeasPlot, aes(x=Scenario, y=Full, fill=StrategyLab)) +
         strip.text.y=element_text(size = 10)
       )
 
-ggsave(paste0(dirOup, 'SunPishkunAdd30kAcFtFull.png'), height = 8, width = 10)
+ggsave(paste0(dirOup, 'SunPishkunAdd30kAcFtFull_Sep30.png'), height = 8, width = 10)
 
+#####################################################################
+#####################################################################
 
 StgyTbl = fread('lib/StrategyTableSunPishkunAdd_wBase.csv')
+ctFiles = nrow(StgyTbl)
 dateStrt = as.Date('1986-10-01')
 dateEnd = as.Date('1995-09-30')
 #################################################
@@ -121,7 +124,7 @@ dateEnd = as.Date('1995-09-30')
 fileTmp = fileList[1]
 slotListTmp = dplyr::filter(MeasTbl, File == fileTmp)$Slot
 datMeas = data.table()
-for(iterFile in 1:ctFiles){
+for(iterFile in 1:3){
   filePath = paste0(dirInp, StgyTbl$Directory[iterFile], '/', fileTmp)
   ScenarioSet = StgyTbl$ScenarioSet[iterFile]
   Strategy =  StgyTbl$Strategy[iterFile]
@@ -146,11 +149,6 @@ datMeasAgg = datMeas %>%
     summarise(Value = sum(Value)) %>%       # sum up shortages by above groups
     ungroup()
 
-tmp2 = datMeasAgg %>%
-  left_join(ScenTbl) %>%
-  filter(Scenario %in% ScenList) %>%
-  mutate(Scenario = ifelse(nchar(Scenario) == 5, substr(Scenario, 3,5), Scenario))
-
 datMeasPlot = datMeasAgg %>% filter(Scenario == 'Historical', WYear >= 1985, WYear <= 1990) %>%
   filter(Measure == 'GID Shortages')
 datMeasPlot = datMeasPlot %>% left_join(StgyTbl)
@@ -161,17 +159,16 @@ datMeasPlot$Measure = factor(datMeasPlot$Measure ,
   levels = unique(MeasTbl$Measure))
 
 ggplot(data = datMeasPlot) +
-  geom_line(aes(x = WYear, y = Value, colour = StrategyLab)) +
-  geom_point(aes(x = WYear, y = Value, colour = StrategyLab, shape = StrategyLab)) +
-  facet_wrap(~Measure, scales = 'free', ncol = 1) +
-  scale_colour_manual(values = c('#25499F', '#23A491')) +
+  geom_line(aes(x = WYear, y = Value, colour = StrategyLab, linetype = StrategyLab), alpha = 0.8, size = 1) +
+  geom_point(aes(x = WYear, y = Value, colour = StrategyLab, shape = StrategyLab), size = 2, alpha = 0.8) +
+  facet_wrap(~Measure, ncol = 1) +
+  scale_colour_manual(values = c('black', '#B0170F', '#24449B', '#119B8B')) +
   scale_x_continuous(labels = function(x) round(as.numeric(x), digits=0)) +
   xlab('') +
-  ylab('') +
+  ylab('Mean Winter Flow (cfs)') +
   theme(
     axis.line.x=element_line(size=0.5, colour = 'gray60'),
     axis.line.y=element_line(size=0.5, colour = 'gray60'),
-    axis.line=element_blank(),
     axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
     axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
     axis.title.x=element_blank(),
@@ -179,11 +176,6 @@ ggplot(data = datMeasPlot) +
     legend.position="bottom",
     legend.title=element_blank(),
     legend.text=element_text(size = 10),
-    panel.background=element_blank(),
-    panel.border=element_blank(),
-    panel.grid.major=element_blank(),
-    panel.grid.minor=element_blank(),
-    plot.background=element_blank(),
     strip.background = element_blank(),
     strip.text.x=element_text(size = 10),
     strip.text.y=element_text(size = 10)
