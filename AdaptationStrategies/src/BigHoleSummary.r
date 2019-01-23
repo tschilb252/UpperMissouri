@@ -4,7 +4,7 @@
 #' @author Dan Broman
 #' @description Summary figures for the Upper Missouri
 #' Basin Study, Big Hole River Basin
-#' Last Modified June 27 2018
+#' Last Modified July 13 2018
 #################################################
 library(tidyverse)
 library(data.table)
@@ -26,6 +26,8 @@ MeasTbl = fread('lib/MeasureTableBigHole.csv')
 
 ScenList = c('Historical', 'HD', 'HW', 'CT', 'WD', 'WW',
   'FBMID', 'FBLDP', 'FBMIP', 'FBLPP')
+MonthList = c('January', 'February', 'March', 'April', 'May', 'June', 'July',
+  'August', 'September', 'October', 'November', 'December')
 #################################################
 #'  Read in Data
 
@@ -117,7 +119,7 @@ datMeas2AvgFut = datMeas2Avg %>%
   left_join(datMeas2AvgHist) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-measLabTbl = data.table(Month = 1:12, Measure = paste0(month.abb, ' In-Stream Flow'))
+measLabTbl = data.table(Month = 1:12, Measure = paste0('Big Hole near Windom ', MonthList, ' Flow'))
 
 datMeas2AvgFut = datMeas2AvgFut %>%
   left_join(measLabTbl)
@@ -135,55 +137,58 @@ datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
   levels = rev(unique(StgyTbl$StrategyLab)))
 
 datMeasPlot$Measure = factor(datMeasPlot$Measure ,
-  levels = c('Upper Irrigators Shortage', 'Jul In-Stream Flow',
-  'Aug In-Stream Flow', 'Sep In-Stream Flow', 'Oct In-Stream Flow'))
+  levels = c('Upper Irrigators Shortage', 'Big Hole near Windom July Flow',
+  'Big Hole near Windom August Flow', 'Big Hole near Windom September Flow',
+  'Big Hole near Windom October Flow'))
 
-# Plot defs
-pctLow = 5
-pctHigh = 100
-colPal = c('#DA4325', '#ECA14E', '#F4F3EB', '#5CC3AF', '#0A6265')
+  # Plot defs
+  pctLow = 5
+  pctHigh = 100
+  colPal = c('#DA4325', '#ECA14E', '#F4F3EB', '#5CC3AF', '#0A6265')
 
-datMeasPlot = datMeasPlot %>%
-  mutate(ValueTxt = ifelse(abs(ValueColScle ) > pctHigh, '•', '')) %>%
-  mutate(ValueColScle = ifelse(abs(ValueColScle) < pctLow, 0,
-  ifelse(ValueColScle > pctHigh, pctHigh,
-    ifelse(ValueColScle < -1 * pctHigh, -1 * pctHigh, ValueColScle))))
+  datMeasPlot = datMeasPlot %>%
+    mutate(ValueTxt = ifelse(abs(ValueColScle ) > pctHigh, '•', '')) %>%
+    mutate(ValueColScle = ifelse(abs(ValueColScle) < pctLow, 0,
+    ifelse(ValueColScle > pctHigh, pctHigh,
+      ifelse(ValueColScle < -1 * pctHigh, -1 * pctHigh, ValueColScle)))) %>%
+    mutate(ValueTxtArrow = ifelse(ValueChange > pctLow, '△', ifelse(ValueColScle < pctLow * -1, '▽', '')))
 
-# Plot 2050s
-datMeasPlotFl = datMeasPlot %>%
-  filter(Period %in% c('2050s', 'Historical') | is.na(Period))
+  # Plot 2050s
+  datMeasPlotFl = datMeasPlot %>%
+    filter(Period %in% c('2050s', 'Historical') | is.na(Period))
 
-ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
-  fill = ValueColScle, label = ValueTxt)) +
-  geom_tile(colour = 'white', size = 1) +
-  geom_text(size = 4, colour = 'white') +
-  facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
-  scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
-  xlab('') +
-  ylab('') +
-  scale_x_discrete(expand=c(0,0), position="top") +
-  scale_y_discrete(expand=c(0,0), position="right") +
-  theme(
-    axis.line.x=element_line(size=0.5, colour = 'gray60'),
-    axis.line.y=element_line(size=0.5, colour = 'gray60'),
-    axis.line=element_blank(),
-    axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
-    axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
-    axis.ticks=element_blank(),
-    axis.title.x=element_blank(),
-    axis.title.y=element_blank(),legend.position="none",
-    panel.background=element_blank(),
-    panel.border=element_blank(),
-    panel.grid.major=element_blank(),
-    panel.grid.minor=element_blank(),
-    plot.background=element_blank(),
-    strip.background = element_blank(),
-    strip.text.x=element_text(size = 10),
-    strip.text.y=element_text(size = 10)
-  ) +
-    coord_equal()
+  ggplot(data = datMeasPlotFl, aes(x = Measure, y = Scenario,
+    fill = ValueColScle)) +
+    geom_tile(colour = 'white', size = 2) +
+    geom_text(aes(label = ValueTxt), size = 4, colour = 'white') +
+    geom_text(aes(label = ValueTxtArrow), size = 6, colour = 'black', alpha = 0.8) +
+    facet_wrap(~StrategyLab, ncol = 1, strip.position="left", labeller = label_wrap_gen(width=20)) +
+    scale_fill_gradientn(colors = colPal, limits = c(-pctHigh, pctHigh)) +
+    xlab('') +
+    ylab('') +
+    scale_x_discrete(expand=c(0,0), position="top") +
+    scale_y_discrete(expand=c(0,0), position="right") +
+    theme(
+      axis.line.x=element_line(size=0.5, colour = 'gray60'),
+      axis.line.y=element_line(size=0.5, colour = 'gray60'),
+      axis.line=element_blank(),
+      axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
+      axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
+      axis.ticks=element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank(),legend.position="none",
+      panel.background=element_blank(),
+      panel.border=element_blank(),
+      panel.grid.major=element_blank(),
+      panel.grid.minor=element_blank(),
+      plot.background=element_blank(),
+      strip.background = element_blank(),
+      strip.text.x=element_text(size = 10),
+      strip.text.y=element_text(size = 10)
+    ) +
+      coord_equal()
 
-ggsave(paste0(dirOup, 'BigHoleGrid2050s.png'), height = 7.5, width = 3)
+ggsave(paste0(dirOup, 'BigHoleGrid2050s.png'), height = 12, width = 3, bg = 'transparent')
 write.csv(datMeasPlot, paste0(dirOup, 'BigHoleGrid2050s.csv'), row.names = F, quote = F)
 
 # Plot Historical

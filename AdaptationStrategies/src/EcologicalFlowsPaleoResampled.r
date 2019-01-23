@@ -137,9 +137,11 @@ datMeasPlot$Measure = factor(datMeasPlot$Measure,
 
 # datMeasPlot$Measure = factor(datMeasPlot$Measure,
 #   levels = c('Combined Releases', 'Tiber Releases', 'Canyon Ferry Releases'))
-
 # Pull out Historical Baseline to plot as line
-datMeasPlotHist = datMeasPlot %>% filter()
+
+datMeasPlotHist = data.table(Measure = c('Canyon Ferry Releases', 'Tiber Releases', 'Combined Releases'), Scenario = 'Historical', Value = c(6,10,1))
+datMeasPlotHist$Measure = factor(datMeasPlotHist$Measure,
+  levels = c('Canyon Ferry Releases', 'Tiber Releases', 'Combined Releases'))
 
 datMeasPlotFl = datMeasPlot %>% filter(Period %in% c('Historical', '2050s'))
 
@@ -150,6 +152,7 @@ ggplot(data = datMeasPlotFl) +
     colour = Measure),
     position = position_dodge(width = 1),
     alpha = 0.8, size = 10) +
+    geom_point(data = datMeasPlotHist, aes(x = Scenario, y = Value), shape = '|', size = 8) +
     scale_colour_manual(values = c('#24449B', '#119B8B', 'black'), guide = F) +
   	theme_bw() +
     facet_wrap(~Measure) +
@@ -162,4 +165,4 @@ ggplot(data = datMeasPlotFl) +
   	ylab('No. Releases') +
     coord_flip()
 
-ggsave(paste0(dirOup, 'EcologicalFlowReleasesBar.png'), height = 10, width = 10)
+ggsave(paste0(dirOup, 'EcologicalFlowReleasesBar.png'), height = 3, width = 8)

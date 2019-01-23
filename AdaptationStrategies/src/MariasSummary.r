@@ -10,6 +10,7 @@ library(tidyverse)
 library(data.table)
 library(RWDataPlyr)
 library(RColorBrewer)
+library(httr)
 setwd('C:/Projects/git/UpperMissouri/AdaptationStrategies/')
 source('src/fncnLib.r')
 
