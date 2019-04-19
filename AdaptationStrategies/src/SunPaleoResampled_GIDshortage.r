@@ -17,8 +17,8 @@ source('src/fncnLib.r')
 #################################################
 #' User Inputs
 # Data Directories
-dirInp = 'T:/WaterResources/PlanningOperations/Staff/DBROMAN/UMBIA/Data/'
-dirOup = 'T:/WaterResources/PlanningOperations/Staff/DBROMAN/UMBIA/AdaptationStrategies/Figures/'
+dirInp = 'Z:/DO/Team/WaterResources/PlanningOperations/Staff/DBROMAN/UMBIA/Data/'
+dirOup = 'C:/Users/MMcguire/Documents/GitHub/UpperMissouri/AdaptationStrategies/Figures/'
 
 # LookUp Table Locations
 ScenTbl = fread('lib/ScenarioTable.csv')
@@ -65,7 +65,7 @@ datMeasAgg = datMeas %>%
 datMeasAggDist = datMeasAgg %>%
   filter(Measure == 'GID Shortages')
 
-  
+
 test = datMeasAggDist %>% group_by(Trace) %>%
   dplyr::summarise(Value = mean(Value)) %>%
   arrange(Value)
@@ -95,6 +95,7 @@ ggplot(data = datMeasPlot) +
 #  scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1),
 #    labels = paste0(c(0, 25, 50, 75, 100), '%')) +
   scale_x_continuous(labels = function(x) round(as.numeric(x), digits=0)) +
+  scale_y_continuous(labels = comma) +
   xlab('') +
   ylab('') +
   theme(
