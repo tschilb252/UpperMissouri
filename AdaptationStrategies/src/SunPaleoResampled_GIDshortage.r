@@ -118,4 +118,4 @@ ggplot(data = datMeasPlot) +
     strip.text.x=element_text(size = 10),
     strip.text.y=element_text(size = 10)
   )
-ggsave(paste0(dirOup, 'Sun_GISshortages_PishkunAdd_PaleoResq.png'), height = 8, width = 15)
+ggsave(paste0(dirOup, 'Sun_GIDshortages_PishkunAdd_PaleoResq_V2.png'), height = 4, width = 6.5, dpi=350)
