@@ -11,16 +11,16 @@ library(tidyverse)
 library(data.table)
 library(RWDataPlyr)
 library(RColorBrewer)
+library(scales)
 setwd('C:/Users/MMcguire/Documents/GitHub/UpperMissouri/AdaptationStrategies/')
 source('src/fncnLib.r')
 
 #################################################
 #' User Inputs
 # Data Directories
-dirInp = 'T:/WaterResources/PlanningOperations/Staff/DBROMAN/UMBIA/Data/'
-dirOup = 'T:/WaterResources/PlanningOperations/Staff/DBROMAN/UMBIA/AdaptationStrategies/Figures/'
+dirInp = 'Z:/DO/Team/WaterResources/PlanningOperations/Staff/DBROMAN/UMBIA/Data/'
+dirOup = 'C:/Users/MMcguire/Documents/GitHub/UpperMissouri/AdaptationStrategies/Figures/'
 
-# LookUp Table Locations
 ScenTbl = fread('lib/ScenarioTable.csv')
 StgyTbl = fread('lib/StrategyTableSunPaleoResampled.csv')
 MeasTbl = fread('lib/MeasureTableSun.csv')
@@ -99,14 +99,17 @@ ggplot(data = datMeasPlot1) +
   # geom_ribbon(aes(x = Year, ymin = 0, ymax = 0.5), fill = '#DC8C6B', alpha = 0.3) +
 #  geom_hline(yintercept = c(0.77, 0.5, 0.25), alpha = 0.6, linetype = 3, size = 0.2) +
   geom_line(aes(x = Year, y = Value, colour = StrategyLab)) +
+  geom_hline(yintercept=2233, linetype="dashed", color = "black") +
   geom_point(aes(x = Year, y = Value, colour = StrategyLab, shape = StrategyLab)) +
+  geom_text(aes(1955, 2233), label='Minimum Storage', vjust=1, color = "black",size=3.0) +
   facet_wrap(~Measure, ncol = 1) +
   scale_colour_manual(values = c('black', '#25499F', '#23A491', '#7A5BA9')) +
 #  scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1),
 #    labels = paste0(c(0, 25, 50, 75, 100), '%')) +
   scale_x_continuous(labels = function(x) round(as.numeric(x), digits=0)) +
+  scale_y_continuous(labels = comma) +
   xlab('') +
-  ylab('') +
+  ylab('Storage (AF)') +
   theme(
     axis.line.x=element_line(size=0.5, colour = 'gray60'),
     axis.line.y=element_line(size=0.5, colour = 'gray60'),
@@ -114,7 +117,7 @@ ggplot(data = datMeasPlot1) +
     axis.text.x=element_text(angle = 90, hjust = 0, vjust = 0.5, size = 10),
     axis.text.y=element_text(hjust = 0, vjust = 0.5, size = 10),
     axis.title.x=element_blank(),
-    axis.title.y=element_blank(),
+    axis.title.y=element_text(size=10),
     legend.position="bottom",
     legend.title=element_blank(),
     legend.text=element_text(size = 10),
@@ -127,7 +130,7 @@ ggplot(data = datMeasPlot1) +
     strip.text.x=element_text(size = 10),
     strip.text.y=element_text(size = 10)
   )
-ggsave(paste0(dirOup, 'WillowCreekStorageLongestDrought_V3.png'), height = 8, width = 15)
+ggsave(paste0(dirOup, 'WillowCreekStorageLongestDrought_V4.png'), height = 4, width = 6.5, dpi=350)
 
 #################################################################################################
 
