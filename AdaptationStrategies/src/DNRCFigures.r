@@ -58,6 +58,7 @@ ggplot(data = IrrigSystDat) +
   scale_color_manual(values = c('#B0170F', '#24449B', '#119B8B')) +
   xlab('') +
   ylab('Acres') +
+  theme_bw() +
   theme(
     axis.line.x=element_line(size=0.5, colour = 'gray60'),
     axis.line.y=element_line(size=0.5, colour = 'gray60'),

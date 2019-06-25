@@ -16,8 +16,8 @@ source('src/fncnLib.r')
 #################################################
 #' User Inputs
 # Data Directories
-dirInp = 'T:/PlanningOperations/Staff/DBROMAN/UMBIA/Data/'
-dirOup = 'T:/PlanningOperations/Staff/DBROMAN/UMBIA/AdaptationStrategies/Figures/'
+dirInp = 'Z:/DO/TSC/Jobs/GP/Missouri River/2016-EBC-Missouri Headwaters Basin Study/CALC/RiverSmart/Scenario/'
+dirOup = 'Z:/DO/TSC/Jobs/GP/Missouri River/2016-EBC-Missouri Headwaters Basin Study/CALC/PostProcessing/'
 
 # LookUp Table Locations
 ScenTbl = fread('lib/ScenarioTable.csv')
@@ -119,7 +119,7 @@ datMeas2AvgFut = datMeas2Avg %>%
   left_join(datMeas2AvgHist) %>%
   mutate(ValueChange = (Value - ValueHist) / ValueHist * 100)
 
-measLabTbl = data.table(Month = 1:12, Measure = paste0('Big Hole near Windom ', MonthList, ' Flow'))
+measLabTbl = data.table(Month = 1:12, Measure = paste0('Big Hole near Wisdom ', MonthList, ' Flow'))
 
 datMeas2AvgFut = datMeas2AvgFut %>%
   left_join(measLabTbl)
@@ -137,9 +137,9 @@ datMeasPlot$StrategyLab = factor(datMeasPlot$StrategyLab,
   levels = rev(unique(StgyTbl$StrategyLab)))
 
 datMeasPlot$Measure = factor(datMeasPlot$Measure ,
-  levels = c('Upper Irrigators Shortage', 'Big Hole near Windom July Flow',
-  'Big Hole near Windom August Flow', 'Big Hole near Windom September Flow',
-  'Big Hole near Windom October Flow'))
+  levels = c('Upper Irrigators Shortage', 'Big Hole near Wisdom July Flow',
+  'Big Hole near Wisdom August Flow', 'Big Hole near Wisdom September Flow',
+  'Big Hole near Wisdom October Flow'))
 
   # Plot defs
   pctLow = 5
